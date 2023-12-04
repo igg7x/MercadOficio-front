@@ -1,7 +1,6 @@
 import React from "react";
 import RegisterCard from "./RegisterCard";
-
-const RegisterMain = ({ setView }) => {
+const RegisterMain = () => {
   return (
     <main>
       <section>
@@ -17,14 +16,12 @@ const RegisterMain = ({ setView }) => {
       </section>
       <section className="flex mx-auto mt-4  max-w-screen-xl items-center max-[750px]:flex-col justify-around ">
         <RegisterCard
-          setView={setView}
           title={"Quiero Contratar"}
           desc={"Estas Interesado en contratar "}
           srcImg="src\assets\pexels-sora-shimazaki-5673488.jpg"
           registerPage={"customer"}
         />
         <RegisterCard
-          setView={setView}
           title={"Quiero Ofrecer Servicio"}
           desc={"Estas Interesado en ofrecer servicio"}
           srcImg="src\assets\pexels-fox-1595385.jpg"

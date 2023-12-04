@@ -23,10 +23,14 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
-    children: [
-      { path: "customer", element: <CustomerRegister /> },
-      { path: "offering", element: <OfferingRegister /> },
-    ],
+  },
+  {
+    path: "/register/customer",
+    element: <CustomerRegister />,
+  },
+  {
+    path: "/register/offering",
+    element: <OfferingRegister />,
   },
 ]);
 
