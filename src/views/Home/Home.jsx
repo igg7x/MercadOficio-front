@@ -1,11 +1,10 @@
 import React from "react";
-import { useState } from "react";
 import HomeFooter from "./components/HomeFooter";
 import { Link } from "react-router-dom";
 import HomeNav from "./components/HomeNav";
-const Home = () => {
-  const [state, setState] = useState(false);
+import HomeFeatures from "./components/HomeFeatures";
 
+const Home = () => {
   return (
     <>
       <HomeNav />
@@ -23,11 +22,11 @@ const Home = () => {
               mejores talentos en nuestro mercado de oficios.
             </p>
             <div className="items-center gap-x-3 space-y-3 sm:flex sm:space-y-0">
-              <a
-                href="javascript:void(0)"
+              <Link
+                to={"/register"}
                 className="block py-2 px-4 text-center text-white font-medium bg-indigo-600 duration-150 hover:bg-indigo-500 active:bg-indigo-700 rounded-lg shadow-lg hover:shadow-none">
                 Crear cuenta
-              </a>
+              </Link>
               <Link
                 to={"/login"}
                 className="flex items-center justify-center gap-x-2 py-2 px-4 text-gray-700 hover:text-gray-500 font-medium duration-150 active:bg-gray-100 border rounded-lg md:inline-flex">
@@ -123,6 +122,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+      <HomeFeatures />
       <HomeFooter />
     </>
   );
