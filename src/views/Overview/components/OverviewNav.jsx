@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const HomeNav = () => {
+const OverViewNav = () => {
   const [state, setState] = useState(false);
 
   const navigation = [
@@ -95,4 +95,4 @@ const HomeNav = () => {
   );
 };
 
-export default HomeNav;
+export default OverViewNav;

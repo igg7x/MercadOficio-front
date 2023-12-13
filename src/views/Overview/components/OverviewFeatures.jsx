@@ -1,6 +1,6 @@
 import React from "react";
 
-const HomeFeatures = () => {
+const OverViewFeatures = () => {
   const features = [
     {
       icon: (
@@ -157,4 +157,4 @@ const HomeFeatures = () => {
   );
 };
 
-export default HomeFeatures;
+export default OverViewFeatures;

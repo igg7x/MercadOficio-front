@@ -18,7 +18,7 @@ const footerNavs = [
     name: "About us",
   },
 ];
-const HomeFooter = () => {
+const OverViewFooter = () => {
   return (
     <footer className="pt-10">
       <div className="max-w-screen-xl mx-auto px-4 text-gray-600 md:px-8">
@@ -340,4 +340,4 @@ const HomeFooter = () => {
   );
 };
 
-export default HomeFooter;
+export default OverViewFooter;

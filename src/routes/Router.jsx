@@ -1,15 +1,17 @@
 import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Home from "../views/Home/Home";
+import Overview from "../views/Overview/Overview";
 import Error404 from "../views/Errors/Error404";
 import Login from "../views/Login/Login";
 import Register from "../views/Register/Register";
 import CustomerRegister from "../views/Register/CustomerRegister";
 import OfferingRegister from "../views/Register/OfferingRegister";
+import Home from "../views/Home/Home";
+
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <Overview />,
     errorElement: <Error404 />,
   },
   {
@@ -32,6 +34,7 @@ const router = createBrowserRouter([
     path: "/register/offering",
     element: <OfferingRegister />,
   },
+  { path: "/home", element: <Home /> },
 ]);
 
 const Router = () => {
