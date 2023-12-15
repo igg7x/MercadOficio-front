@@ -147,7 +147,7 @@ const HomeSideBar = () => {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 w-full h-full border-r bg-white space-y-8 sm:w-80">
+      <nav className="fixed[grid-area:sidebar]   top-0 left-0 w-full h-full border-r bg-white space-y-8 sm:w-64">
         <div class="flex flex-col h-full">
           <div className="h-20 flex items-center px-8">
             <a href="javascript:void(0)" className="flex-none">
@@ -206,6 +206,9 @@ const HomeSideBar = () => {
           </div>
         </div>
       </nav>
+      {/* <aside className="[grid-area:sidebar]  bg-blue-300 flex-col flex overflow-y-auto ">
+        ASIDE
+      </aside> */}
     </>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Card = ({ item }) => {
+const Card = ({ item, idx }) => {
   return (
     <li key={idx} className="p-5 bg-white rounded-md shadow-sm">
       <a href={item.href}>
@@ -8,7 +8,7 @@ const Card = ({ item }) => {
           <div className="justify-between sm:flex">
             <div className="flex-1">
               <h3 className="text-xl font-medium text-cyan-600">
-                {item.title}
+                {item.job_description}
               </h3>
               <p className="text-gray-500 mt-2 pr-2">{item.desc}</p>
             </div>
