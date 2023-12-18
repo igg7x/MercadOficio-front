@@ -279,13 +279,46 @@ const members = [
 
 const HomeMain = () => {
   return (
-    <div className="[grid-area:main]    gap-5 m-1 flex-col flex items-center overflow-y-auto   p-3">
-      <div className="flex flex-col w-full ">
-        <h1 className="font-bold  text-4xl">Open Positions</h1>
-        <h3 className="font-bold text-xl">
+    <div className="[grid-area:main]    gap-4 m-1 flex-col flex items-center overflow-y-auto   p-3">
+      <div id="inicio" className=" max-[640px]:block  hidden">
+        <a href="javascript:void(0)" className="flex-none">
+          <img
+            src="src/assets/logo-no-background.svg"
+            width={250}
+            className="mx-auto"
+          />
+        </a>
+      </div>
+      <div className="flex flex-col w-full  ">
+        <h1 className="font-bold  tracking-tight text-3xl">Open Positions</h1>
+        <h3 className="font-bold tracking-tight text-xl">
           Encuentra a usuarios oferentes sobre el rubro que estas buscando
         </h3>
       </div>
+      <section id="search-section" className="flex  justify-center  w-[90%]">
+        <form onSubmit={(e) => e.preventDefault()} className=" ">
+          <div className="relative">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-400 left-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search"
+              className="w-full py-3 pl-12 pr-4 text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-indigo-600"
+            />
+          </div>
+        </form>
+      </section>
       <section className="flex flex-col    w-[90%]">
         <ul className="mt-2 divide-y overflow-y-auto spacey-3">
           {members.map((item, id) => (

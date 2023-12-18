@@ -1,5 +1,5 @@
 import React from "react";
-
+import ItemNav from "./ItemNav";
 const HomeSideBar = () => {
   const navigation = [
     {
@@ -121,6 +121,76 @@ const HomeSideBar = () => {
     },
   ];
 
+  const navMobile = [
+    {
+      href: "#inicio",
+      name: "Inicio",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-5 h-5">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M6 6.878V6a2.25 2.25 0 012.25-2.25h7.5A2.25 2.25 0 0118 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 004.5 9v.878m13.5-3A2.25 2.25 0 0119.5 9v.878m0 0a2.246 2.246 0 00-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0121 12v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6c0-.98.626-1.813 1.5-2.122"
+          />
+        </svg>
+      ),
+    },
+    {
+      href: "javascript:void(0)",
+      name: "Chats",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-5 h-5">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M6 6.878V6a2.25 2.25 0 012.25-2.25h7.5A2.25 2.25 0 0118 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 004.5 9v.878m13.5-3A2.25 2.25 0 0119.5 9v.878m0 0a2.246 2.246 0 00-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0121 12v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6c0-.98.626-1.813 1.5-2.122"
+          />
+        </svg>
+      ),
+    },
+    {
+      href: "javascript:void(0)",
+      name: "Plans",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-5 h-5">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M17.25 15.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM12 12a3 3 0 100-6 3 3 0 000 6z"
+          />
+        </svg>
+      ),
+    },
+    {
+      href: "javascript:void(0)",
+      name: "Profile",
+      icon: (
+        <img
+          src="https://randomuser.me/api/portraits/women/79.jpg"
+          class="w-8 h-8 rounded-full"
+        />
+      ),
+    },
+  ];
+
   return (
     <>
       <nav className="fixed[grid-area:sidebar]  max-[640px]:hidden   top-0 left-0 w-full h-full border-r bg-white space-y-8 sm:w-64">
@@ -182,9 +252,30 @@ const HomeSideBar = () => {
           </div>
         </div>
       </nav>
-      {/* <aside className="[grid-area:sidebar]  bg-blue-300 flex-col flex overflow-y-auto ">
-        ASIDE
-      </aside> */}
+
+      <nav
+        id="mobile-navbar"
+        className="
+        fixed
+        bottom-0
+        left-0
+        w-full
+        h-20
+        border-t
+        flex
+        justify-center
+        items-center
+        max-[640px]:block
+        hidden
+        bg-slate-200
+        rounded-t-3xl
+        ">
+        <ul className="flex justify-around items-center p-2 w-full">
+          {navMobile.map((item, idx) => (
+            <ItemNav key={idx} item={item} />
+          ))}
+        </ul>
+      </nav>
     </>
   );
 };
