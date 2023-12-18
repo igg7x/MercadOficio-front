@@ -1,6 +1,8 @@
 import React from "react";
 import HomeSideBar from "./components/HomeSideBar";
 import HomeMain from "./components/HomeMain";
+import "./home.css";
+
 const Home = () => {
   return (
     <div

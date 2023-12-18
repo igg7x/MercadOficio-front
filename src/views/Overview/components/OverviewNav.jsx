@@ -73,14 +73,14 @@ const OverViewNav = () => {
             })}
             <span className="hidden w-px h-6 bg-gray-300 md:block"></span>
             <div className="space-y-3 items-center gap-x-6 md:flex md:space-y-0">
-              <li>
+              <li className="max-[760px]:hidden">
                 <Link
                   to={"/login"}
                   className="block py-3 text-center text-gray-700 hover:text-indigo-600 border rounded-lg md:border-none">
                   Ingresar
                 </Link>
               </li>
-              <li>
+              <li className="max-[760px]:hidden">
                 <Link
                   to={"/register"}
                   className="block py-3 px-4 font-medium text-center text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 active:shadow-none rounded-lg shadow md:inline">

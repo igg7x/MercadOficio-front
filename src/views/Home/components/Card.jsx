@@ -1,11 +1,15 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 const Card = ({ item, idx }) => {
   return (
     <li key={idx} className="p-5 bg-white rounded-md shadow-sm">
-      <a href={item.href}>
+      <Link href={item.href}>
         <div>
-          <div className="justify-between sm:flex">
+          <div className="justify-between gap-1 sm:flex">
+            <img
+              src="https://randomuser.me/api/portraits/women/80.jpg"
+              className="w-12 h-12 rounded-full"
+            />
             <div className="flex-1">
               <h3 className="text-xl font-medium text-cyan-600">
                 {item.job_description}
@@ -74,9 +78,25 @@ const Card = ({ item, idx }) => {
               </svg>
               {item.location}
             </span>
+            <button className="px-3  flex items-center gap-1 py-1.5 text-sm text-indigo-600 duration-150 bg-indigo-50 rounded-lg hover:bg-indigo-100 active:bg-indigo-200">
+              Mensaje{" "}
+              <svg
+                className="w-6 h-6 text-gray-400   inset-y-0 my-auto"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                />
+              </svg>
+            </button>
           </div>
         </div>
-      </a>
+      </Link>
     </li>
   );
 };
