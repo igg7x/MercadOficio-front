@@ -1,5 +1,6 @@
 import React from "react";
 import Card from "./Card";
+import { Outlet } from "react-router-dom";
 const members = [
   {
     company_icon: (
@@ -280,7 +281,7 @@ const members = [
 const HomeMain = () => {
   return (
     <div className="[grid-area:main]    gap-4 m-1 flex-col flex items-center overflow-y-auto   p-3">
-      <div id="inicio" className=" max-[640px]:block  hidden">
+      <header id="inicio" className=" max-[640px]:block  hidden">
         <a href="javascript:void(0)" className="flex-none">
           <img
             src="src/assets/logo-no-background.svg"
@@ -288,7 +289,7 @@ const HomeMain = () => {
             className="mx-auto"
           />
         </a>
-      </div>
+      </header>
       <div className="flex flex-col w-full  ">
         <h1 className="font-bold  tracking-tight text-3xl">Open Positions</h1>
         <h3 className="font-bold tracking-tight text-xl">
@@ -326,6 +327,7 @@ const HomeMain = () => {
           ))}
         </ul>
       </section>
+      <Outlet />
     </div>
   );
 };

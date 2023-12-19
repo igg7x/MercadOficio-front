@@ -6,8 +6,9 @@ import Login from "../views/Login/Login";
 import Register from "../views/Register/Register";
 import CustomerRegister from "../views/Register/CustomerRegister";
 import OfferingRegister from "../views/Register/OfferingRegister";
+import Chat from "../views/Chat/Chat";
 import Home from "../views/Home/Home";
-
+import HomeMain from "../views/Home/components/HomeMain";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -34,7 +35,14 @@ const router = createBrowserRouter([
     path: "/register/offering",
     element: <OfferingRegister />,
   },
-  { path: "/home", element: <Home /> },
+  {
+    path: "/home/*",
+    element: <Home />,
+    // children: [
+    //   { path: "/", element: <HomeMain /> },
+    //   { path: "chats", element: <Chat /> },
+    // ],
+  },
 ]);
 
 const Router = () => {

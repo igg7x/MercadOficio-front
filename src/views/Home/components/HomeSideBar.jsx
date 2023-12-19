@@ -1,9 +1,12 @@
 import React from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import Chat from "../../Chat/Chat";
 import ItemNav from "./ItemNav";
+import HomeMain from "./HomeMain";
 const HomeSideBar = () => {
   const navigation = [
     {
-      href: "javascript:void(0)",
+      href: "/home",
       name: "Inicio",
       icon: (
         <svg
@@ -22,7 +25,7 @@ const HomeSideBar = () => {
       ),
     },
     {
-      href: "javascript:void(0)",
+      href: "/home/chats",
       name: "Chats",
       icon: (
         <svg
@@ -123,7 +126,7 @@ const HomeSideBar = () => {
 
   const navMobile = [
     {
-      href: "#inicio",
+      href: "/home",
       name: "Inicio",
       icon: (
         <svg
@@ -142,7 +145,7 @@ const HomeSideBar = () => {
       ),
     },
     {
-      href: "javascript:void(0)",
+      href: "/home/chats",
       name: "Chats",
       icon: (
         <svg
@@ -185,7 +188,7 @@ const HomeSideBar = () => {
       icon: (
         <img
           src="https://randomuser.me/api/portraits/women/79.jpg"
-          class="w-8 h-8 rounded-full"
+          className="w-8 h-8 rounded-full"
         />
       ),
     },
@@ -194,26 +197,24 @@ const HomeSideBar = () => {
   return (
     <>
       <nav className="fixed[grid-area:sidebar]  max-[640px]:hidden   top-0 left-0 w-full h-full border-r bg-white space-y-8 sm:w-64">
-        <div class="flex flex-col h-full">
+        <div className="flex flex-col h-full">
           <div className="h-20 flex items-center px-8">
-            <a href="javascript:void(0)" className="flex-none">
-              <img
-                src="src/assets/logo-no-background.svg"
-                width={200}
-                className="mx-auto"
-              />
-            </a>
+            <img
+              src="src/assets/logo-no-background.svg"
+              width={200}
+              className="mx-auto"
+            />
           </div>
           <div className="flex-1 flex flex-col h-full overflow-auto">
             <ul className="px-4 text-sm font-medium flex-1">
               {navigation.map((item, idx) => (
                 <li key={idx}>
-                  <a
-                    href={item.href}
+                  <Link
+                    to={item.href}
                     className="flex items-center gap-x-2 text-gray-600 p-2 rounded-lg  hover:bg-gray-50 active:bg-gray-100 duration-150">
                     <div className="text-gray-500">{item.icon}</div>
                     {item.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -222,7 +223,7 @@ const HomeSideBar = () => {
                 {navsFooter.map((item, idx) => (
                   <li key={idx}>
                     <a
-                      href={item.href}
+                      to={item.href}
                       className="flex items-center gap-x-2 text-gray-600 p-2 rounded-lg  hover:bg-gray-50 active:bg-gray-100 duration-150">
                       <div className="text-gray-500">{item.icon}</div>
                       {item.name}
@@ -262,7 +263,6 @@ const HomeSideBar = () => {
         w-full
         h-20
         border-t
-        flex
         justify-center
         items-center
         max-[640px]:block
