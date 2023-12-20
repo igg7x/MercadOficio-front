@@ -70,8 +70,8 @@ const Contacts = () => {
   ];
 
   return (
-    <section className="[grid-area:aside] pl-3 py-3 flex flex-col">
-      <h1 className="font-bold text-2xl ">Contacts</h1>
+    <section className="[grid-area:aside] pl-3 pt-2 flex flex-col">
+      <h1 className="font-bold text-2xl ">Chats</h1>
       <ul className="min-h-fit p-2 mt-2 bg-slate-100 rounded-xl  overflow-y-scroll">
         {contacts.map((item, id) => (
           <li
