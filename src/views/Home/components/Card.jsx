@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Card = ({ item, idx }) => {
   return (
     <li key={idx} className="p-5 bg-white rounded-md shadow-sm">
-      <Link href={item.href}>
+      <Link to={item.href}>
         <div>
           <div className="justify-between gap-1 sm:flex">
             <img
