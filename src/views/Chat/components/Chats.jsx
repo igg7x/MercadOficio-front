@@ -7,18 +7,26 @@ const Chats = () => {
       message: "Hello",
     },
     { name: "Me", message: "Hello Hugo", date: "2021-10-10" },
-    { name: "Hugo", message: "Hello Igna", date: new Date().toISOString() },
+    // { name: "Hugo", message: "Hello Igna", date: new Date().toISOString() },
+    {
+      name: "Me",
+      message: "Hello Hugo",
+      date: new Date().toLocaleString().substring(11, 17),
+    },
     { name: "Me", message: "Hello Hugo" },
-    { name: "Me", message: "Hello Hugo" },
     { name: "Hugo", message: "Hello Ronnie (JOAQUIN)" },
     { name: "Hugo", message: "Hello Ronnie (JOAQUIN)" },
     { name: "Hugo", message: "Hello Ronnie (JOAQUIN)" },
-    { name: "Hugo", message: "Hello Ronnie (JOAQUIN)" },
+    {
+      name: "Hugo",
+      message: "Hello Ronnie (JOAQUIN)",
+      date: new Date().toLocaleString().substring(11, 17),
+    },
   ];
 
-  // const chats = [];
+  //  const chats = [];
   return (
-    <section className="[grid-area:main] relative flex  max-w-[700px] w-full flex-col">
+    <section className="[grid-area:main] relative flex  max-w-[700px] max-[640px]:mb-20 w-full flex-col">
       {chats.length === 0 ? (
         <div className="flex flex-col items-center  justify-center h-full">
           <h1 className="font-bold text-2xl ">Chats</h1>
@@ -28,7 +36,7 @@ const Chats = () => {
         </div>
       ) : (
         <article className="w-full h-full  flex bg-slate-50">
-          <div className="max-h-16 absolute top-0  right-0  left-0 h-full w-full rounded-b-2xl  bg-slate-100 flex items-center justify-start pl-4  gap-2">
+          <div className="max-h-16 absolute top-0 z-10 right-0  left-0 h-full w-full rounded-b-md  bg-slate-100 flex items-center justify-start pl-4  gap-2">
             <img
               src="https://randomuser.me/api/portraits/women/79.jpg"
               className="w-12 h-12 rounded-full"
@@ -36,12 +44,12 @@ const Chats = () => {
             <p className="text-xl font-semibold tracking-tight ">Hugo</p>
           </div>
 
-          <div className=" w-full  overflow-y-scroll list-none scroll-smooth">
+          <div className=" w-full   overflow-y-scroll list-none scroll-smooth">
             <ul className="py-16">
               {chats.map((item, idx) => (
                 <li
                   key={idx}
-                  className={`flex max-w-[100px] flex-col items-start rounded-lg  p-2 gap-1 my-2 ${
+                  className={`flex max-w-[110px] relative flex-col items-start rounded-lg  p-3 gap- my-2 ${
                     item.name === "Me"
                       ? "bg-sky-500 ml-auto mr-1"
                       : "bg-slate-300 ml-1"
@@ -50,6 +58,9 @@ const Chats = () => {
                     {item.name}
                   </p>
                   <p className="text-sm tracking-tight">{item.message}</p>
+                  <p className="text-xs pt-2 right-1 bottom-0 absolute">
+                    {item.date}
+                  </p>
                 </li>
               ))}
             </ul>
@@ -70,8 +81,8 @@ const Chats = () => {
          left-0
          right-0
             p-3
-            bg-slate-100
-            rounded-t-2xl
+            bg-slate-900
+            rounded-t-md
             gap-2
           ">
         <input
