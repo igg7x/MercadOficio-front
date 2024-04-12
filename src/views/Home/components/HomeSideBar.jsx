@@ -1,8 +1,7 @@
 import React from "react";
-import { Routes, Route, Link } from "react-router-dom";
-import Chat from "../../Chat/Chat";
+import Logo from "/src/assets/logo-no-background.svg";
+import { Link } from "react-router-dom";
 import ItemNav from "./ItemNav";
-import HomeMain from "./HomeMain";
 const HomeSideBar = () => {
   const navigation = [
     {
@@ -43,44 +42,25 @@ const HomeSideBar = () => {
         </svg>
       ),
     },
-    // {
-    //   href: "javascript:void(0)",
-    //   name: "Plans",
-    //   icon: (
-    //     <svg
-    //       xmlns="http://www.w3.org/2000/svg"
-    //       fill="none"
-    //       viewBox="0 0 24 24"
-    //       strokeWidth={1.5}
-    //       stroke="currentColor"
-    //       className="w-5 h-5">
-    //       <path
-    //         strokeLinecap="round"
-    //         strokeLinejoin="round"
-    //         d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
-    //       />
-    //     </svg>
-    //   ),
-    // },
-    // {
-    //   href: "javascript:void(0)",
-    //   name: "Transactions",
-    //   icon: (
-    //     <svg
-    //       xmlns="http://www.w3.org/2000/svg"
-    //       fill="none"
-    //       viewBox="0 0 24 24"
-    //       strokeWidth={1.5}
-    //       stroke="currentColor"
-    //       className="w-5 h-5">
-    //       <path
-    //         strokeLinecap="round"
-    //         strokeLinejoin="round"
-    //         d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3"
-    //       />
-    //     </svg>
-    //   ),
-    // },
+    {
+      href: "/home/profile",
+      name: "Profile",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-5 h-5">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M17.25 15.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM12 12a3 3 0 100-6 3 3 0 000 6z"
+          />
+        </svg>
+      ),
+    },
   ];
 
   const navsFooter = [
@@ -183,7 +163,7 @@ const HomeSideBar = () => {
       ),
     },
     {
-      href: "javascript:void(0)",
+      href: "/home/profile",
       name: "Profile",
       icon: (
         <img
@@ -199,11 +179,7 @@ const HomeSideBar = () => {
       <nav className="fixed[grid-area:sidebar]  max-[640px]:hidden   top-0 left-0 w-full h-full border-r bg-white space-y-8 sm:w-64">
         <div className="flex flex-col h-full">
           <div className="h-20 flex items-center px-8">
-            <img
-              src="src/assets/logo-no-background.svg"
-              width={200}
-              className="mx-auto"
-            />
+            <img src={Logo} width={200} className="mx-auto" />
           </div>
           <div className="flex-1 flex flex-col h-full overflow-auto">
             <ul className="px-4 text-sm font-medium flex-1">
@@ -231,7 +207,7 @@ const HomeSideBar = () => {
                   </li>
                 ))}
               </ul>
-              <div className="py-4 px-4 border-t">
+              <div className="py-4 px-4 border-t border-b">
                 <div className="flex items-center gap-x-4">
                   <img
                     src="https://randomuser.me/api/portraits/women/79.jpg"
@@ -267,7 +243,7 @@ const HomeSideBar = () => {
         items-center
         max-[640px]:block
         hidden
-        bg-slate-200
+        bg-gray-200
         rounded-t-3xl
         ">
         <ul className="flex justify-around items-center p-2 w-full">

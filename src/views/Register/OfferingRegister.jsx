@@ -7,7 +7,7 @@ const OfferingRegister = () => {
         <div className="w-full max-w-md space-y-8 px-4 bg-white text-gray-600 sm:px-0">
           <div className="">
             <img
-              src="https://floatui.com/logo.svg"
+              src="src/assets/logo-no-background.svg"
               width={150}
               className="lg:hidden"
             />
@@ -105,7 +105,7 @@ const OfferingRegister = () => {
       </div>
       <div className="relative flex-1 hidden items-center justify-center h-screen bg-gray-900 lg:flex">
         <div className="relative z-10 w-full max-w-md">
-          <img src="https://floatui.com/logo-dark.svg" width={150} />
+          <img src="src\assets\logo-no-background.svg" width={150} />
           <div className=" mt-16 space-y-3">
             <h3 className="text-white text-3xl font-bold">
               Ofrece el mejor servicio

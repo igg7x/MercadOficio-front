@@ -3,9 +3,9 @@ import HomeSideBar from "./components/HomeSideBar";
 import Chat from "../Chat/Chat";
 import HomeMain from "./components/HomeMain";
 import { Routes, Route } from "react-router-dom";
+import Profile from "../Profile/Profile";
 
 const Home = () => {
-  // const isMobile = window.innerWidth < 640;s
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
   useEffect(() => {
     const handleResize = () => {
@@ -32,6 +32,7 @@ const Home = () => {
       <Routes>
         <Route path="/" element={<HomeMain />} />
         <Route path="chats" element={<Chat />} />
+        <Route path="profile" element={<Profile />} />
       </Routes>
     </div>
   );

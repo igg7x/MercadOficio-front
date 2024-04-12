@@ -9,6 +9,7 @@ import OfferingRegister from "../views/Register/OfferingRegister";
 import Chat from "../views/Chat/Chat";
 import Home from "../views/Home/Home";
 import HomeMain from "../views/Home/components/HomeMain";
+import Reviews from "../views/Profile/components/Reviews";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -38,10 +39,6 @@ const router = createBrowserRouter([
   {
     path: "/home/*",
     element: <Home />,
-    // children: [
-    //   { path: "/", element: <HomeMain /> },
-    //   { path: "chats", element: <Chat /> },
-    // ],
   },
 ]);
 

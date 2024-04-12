@@ -5,7 +5,7 @@ import OverViewFooter from "../Overview/components/OverviewFooter";
 const Register = () => {
   return (
     <>
-      <RegisterNav />
+      <RegisterNav text={"Iniciar Sesion"} route={"/login"} />
       <RegisterMain />
       <OverViewFooter />
     </>

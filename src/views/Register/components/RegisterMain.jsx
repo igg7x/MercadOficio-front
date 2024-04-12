@@ -2,13 +2,13 @@ import React from "react";
 import RegisterCard from "./RegisterCard";
 const RegisterMain = () => {
   return (
-    <main>
+    <main className="">
       <section>
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto">
             <div className="text-center">
-              <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-                Crea una cuenta
+              <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+                Crear cuenta
               </h2>
             </div>
           </div>
@@ -18,7 +18,7 @@ const RegisterMain = () => {
         <RegisterCard
           title={"Quiero Contratar"}
           desc={"Estas Interesado en contratar "}
-          srcImg="src\assets\pexels-sora-shimazaki-5673488.jpg"
+          srcImg="src/assets/undraw_undraw_businessman_e7v0_qrld.svg"
           registerPage={"customer"}
         />
         <RegisterCard
