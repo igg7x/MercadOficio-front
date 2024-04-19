@@ -24,7 +24,7 @@ const Home = () => {
       style={{
         padding: "5",
         display: "grid",
-        gridTemplateColumns: "1fr 4fr",
+        gridTemplateColumns: "1fr 5fr",
         gridTemplateRows: "100vh",
         gridTemplateAreas: isMobile ? '"main main"' : '"sidebar main"',
       }}>

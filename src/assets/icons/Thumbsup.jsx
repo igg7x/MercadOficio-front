@@ -1,5 +1,5 @@
 import React from "react";
-
+import { memo } from "react";
 const Thumbsup = () => {
   return (
     <svg

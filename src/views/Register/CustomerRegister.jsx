@@ -1,11 +1,11 @@
 import React from "react";
-
+import Logo from "/src/assets/logo-no-background.svg";
 const CustomerRegister = () => {
   return (
     <main className="w-full flex">
       <div className="relative flex-1 hidden items-center justify-center h-screen bg-gray-900 lg:flex">
         <div className="relative z-10 w-full max-w-md">
-          <img src="src/assets/logo-no-background.svg" width={150} />
+          <img src={Logo} width={350} />
           <div className=" mt-16 space-y-3">
             <h3 className="text-white text-3xl font-bold">
               Contrata el mejor servicio

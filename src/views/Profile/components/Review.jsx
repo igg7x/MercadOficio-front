@@ -10,18 +10,18 @@ const Review = ({ review }) => {
       />
       <div>
         <div className="flex items-center gap-2">
-          <h2 className="text-lg font-semibold">{review.userNameReviewing}</h2>
-          <h3 className="text-gray-400">{review.emailUserReviewing}</h3>
+          <h2 className="text-lg font-inter">{review.userNameReviewing}</h2>
+          <h3 className="text-gray-400 ">{review.emailUserReviewing}</h3>
         </div>
-        <p className="font-normal">{review.Text}</p>
+        <p className="font-inter text-gray-700">{review.Text}</p>
         <div className="flex items-center gap-2">
           <span className="text-gray-400">{review.date}</span>
           <span className="text-gray-400 flex hover:bg-blue-500 bg-slate-200 p-1 rounded-xl gap-2">
-            <strong className="text-gray-800 font-bold ">
+            <Thumbsup />
+            <strong className="text-gray-800 font-inter">
               {" "}
               {review.num_likes}
             </strong>
-            <Thumbsup />
           </span>
         </div>
       </div>

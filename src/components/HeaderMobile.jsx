@@ -1,7 +1,7 @@
-import React from "react";
+import React, { memo } from "react";
 import Logo from "../assets/logo-no-background.svg";
 
-const HeaderMobile = () => {
+const HeaderMobile = memo(() => {
   return (
     <header
       id="inicio"
@@ -11,6 +11,6 @@ const HeaderMobile = () => {
       </a>
     </header>
   );
-};
+});
 
 export default HeaderMobile;

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { memo } from "react";
 
-const Plus = () => {
+const Plus = memo(() => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -13,6 +13,6 @@ const Plus = () => {
       />
     </svg>
   );
-};
+});
 
 export default Plus;
