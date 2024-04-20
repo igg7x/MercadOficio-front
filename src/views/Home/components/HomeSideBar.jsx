@@ -65,7 +65,7 @@ const HomeSideBar = () => {
 
   const navsFooter = [
     {
-      href: "javascript:void(0)",
+      href: "",
       name: "Help",
       icon: (
         <svg
@@ -84,7 +84,7 @@ const HomeSideBar = () => {
       ),
     },
     {
-      href: "javascript:void(0)",
+      href: "",
       name: "Logout",
       icon: (
         <svg
@@ -144,7 +144,7 @@ const HomeSideBar = () => {
       ),
     },
     {
-      href: "javascript:void(0)",
+      href: "/home/plans",
       name: "Plans",
       icon: (
         <svg

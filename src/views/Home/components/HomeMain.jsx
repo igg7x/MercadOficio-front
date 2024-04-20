@@ -1,94 +1,25 @@
 import React from "react";
 import Card from "./Card";
 import { Outlet } from "react-router-dom";
-import HeaderMobile from "../../../components/HeaderMobile";
-const members = [
-  {
-    job_title: "Full stack engineer",
-    name: "joaquin gonzalez",
-    job_type: "Full-time",
-    bio: "My Biography is very long and I am a very good person",
-    email: "joaquin@gmail.com",
-    location: "Remotely",
-    experience: "5 years",
-    price: 1000,
-    workDayStart: "08:00",
-    workDayEnd: "17:00",
-  },
-  {
-    job_title: "Full stack engineer",
-    name: "joaquin gonzalez",
-    job_type: "Full-time",
-    bio: "My Biography is very long and I am a very good person",
-    email: "joaquin@gmail.com",
-    location: "Remotely",
-    experience: "5 years",
-    price: 1000,
-    workDayStart: "08:00",
-    workDayEnd: "17:00",
-  },
-  {
-    job_title: "Full stack engineer",
-    name: "joaquin gonzalez",
-    job_type: "Full-time",
-    bio: "My Biography is very long and I am a very good person",
-    email: "joaquin@gmail.com",
-    location: "Remotely",
-    experience: "5 years",
-    price: 1000,
-    workDayStart: "08:00",
-    workDayEnd: "17:00",
-  },
-  {
-    job_title: "Full stack engineer",
-    name: "joaquin gonzalez",
-    job_type: "Full-time",
-    bio: "My Biography is very long and I am a very good person",
-    email: "joaquin@gmail.com",
-    location: "Remotely",
-    experience: "5 years",
-    price: 1000,
-    workDayStart: "08:00",
-    workDayEnd: "17:00",
-  },
-  {
-    job_title: "Full stack engineer",
-    name: "joaquin gonzalez",
-    job_type: "Full-time",
-    bio: "My Biography is very long and I am a very good person",
-    email: "joaquin@gmail.com",
-    location: "Remotely",
-    experience: "5 years",
-    price: 1000,
-    workDayStart: "08:00",
-    workDayEnd: "17:00",
-  },
-  {
-    job_title: "Full stack engineer",
-    name: "joaquin gonzalez",
-    job_type: "Full-time",
-    bio: "My Biography is very long and I am a very good person",
-    email: "joaquin@gmail.com",
-    location: "Remotely",
-    experience: "5 years",
-    price: 1000,
-    workDayStart: "08:00",
-    workDayEnd: "17:00",
-  },
-];
-
+import HeaderMobile from "@components/HeaderMobile";
+import Loading from "@components/Loading";
+import Error404 from "@components/Errors/Error404";
+import { useUsersOffering } from "@hooks/useUsersOffering";
 const HomeMain = () => {
+  const { usersOfferings, isLoading, isError, hasNextPage, fetchNextPage } =
+    useUsersOffering();
   return (
     <div className="[grid-area:main]     flex-col flex items-center overflow-y-auto ">
       <HeaderMobile />
       <header className="bg-gray-900 w-full  text-white pt-3 pb-2 md:pt-5 md:pb-2">
         <div className="container mx-auto px-2 md:px-6">
           <div className="max-w-2xl mx-auto text-center">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">
+            <h1 className="text-xl  sm:text-3xl  md:text-4xl font-bold mb-4">
               Encontra a los mejores profesionales
             </h1>
             <p className="text-lg md:text-xl text-gray-300 mb-4">
-              Aplicando los distintos filtros puedes encontrar
+              Aplique los ditintos filtros para encontrar el profesional que
+              necesitas
             </p>
           </div>
         </div>
@@ -152,13 +83,24 @@ const HomeMain = () => {
           </div>
         </div>
       </section>
+
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-4xl mx-auto">
-          <div className="flex flex-col gap-1">
-            {members.map((member, index) => (
-              <Card key={index} user={member} />
-            ))}
-          </div>
+          {usersOfferings.length > 0 && (
+            <div className="flex flex-col gap-1">
+              {usersOfferings.map((user, index) => (
+                <Card key={index} user={user} />
+              ))}
+            </div>
+          )}
+
+          {isLoading && <Loading />}
+          {isError && <Error404 />}
+          {usersOfferings.length === 0 && !isLoading && !isError && (
+            <div className="text-center text-2xl flex w-full justify-center items-center mt-10  text-gray-500">
+              No se encontraron usuarios{" "}
+            </div>
+          )}
         </div>
       </div>
       <Outlet />

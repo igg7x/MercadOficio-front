@@ -1,15 +1,12 @@
 import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Overview from "../views/Overview/Overview";
-import Error404 from "../views/Errors/Error404";
+import Error404 from "@components/Errors/Error404";
 import Login from "../views/Login/Login";
 import Register from "../views/Register/Register";
 import CustomerRegister from "../views/Register/CustomerRegister";
 import OfferingRegister from "../views/Register/OfferingRegister";
-import Chat from "../views/Chat/Chat";
 import Home from "../views/Home/Home";
-import HomeMain from "../views/Home/components/HomeMain";
-import Reviews from "../views/Profile/components/Reviews";
 const router = createBrowserRouter([
   {
     path: "/",
