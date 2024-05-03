@@ -1,5 +1,5 @@
 import React from "react";
-const Card = ({ user, idx }) => {
+const JobCard = ({ user, idx }) => {
   return (
     <li key={idx} className="p-5 bg-white rounded-md shadow-sm">
       <div>
@@ -98,4 +98,4 @@ const Card = ({ user, idx }) => {
   );
 };
 
-export default Card;
+export default JobCard;

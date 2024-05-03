@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import HomeSideBar from "./components/HomeSideBar";
-import Chat from "../Chat/Chat";
+import JobMain from "../Jobs/JobMain";
 import HomeMain from "./components/HomeMain";
 import { Routes, Route } from "react-router-dom";
 import Profile from "../Profile/Profile";
@@ -31,7 +31,7 @@ const Home = () => {
       <HomeSideBar />
       <Routes>
         <Route path="/" element={<HomeMain />} />
-        <Route path="chats" element={<Chat />} />
+        <Route path="jobs" element={<JobMain />} />
         <Route path="profile" element={<Profile />} />
       </Routes>
     </div>

@@ -24,8 +24,8 @@ const HomeSideBar = () => {
       ),
     },
     {
-      href: "/home/chats",
-      name: "Chats",
+      href: "/home/jobs",
+      name: "Jobs",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -125,8 +125,8 @@ const HomeSideBar = () => {
       ),
     },
     {
-      href: "/home/chats",
-      name: "Chats",
+      href: "/home/jobs",
+      name: "Jobs",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"

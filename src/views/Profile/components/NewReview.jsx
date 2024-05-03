@@ -18,7 +18,7 @@ const NewReview = () => {
     updateTextAreaHeight(textAreaRef.current);
   }, [inputValue]);
 
-  function createReview(tweetData) {
+  function createReview(reviewData) {
     //In this function i will pass the session data of the user and the review  to the backend
     // userEmailReviewer; // user that is reviewing
     // userEmailReviewed; // user that is being reviewed

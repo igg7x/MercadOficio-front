@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
-const RegisterCard = ({ desc, title, srcImg, registerPage }) => {
+const RegisterJobCard = ({ desc, title, srcImg, registerPage }) => {
   let { path, url } = useSearchParams();
 
   return (
@@ -10,7 +10,7 @@ const RegisterCard = ({ desc, title, srcImg, registerPage }) => {
         <img
           src={srcImg}
           loading="lazy"
-          alt="register card"
+          alt="register JobCard"
           className="w-full h-72 opacity-90 rounded-t-md"
         />
         <div className="pt-3 ml-4 mr-2 mb-3">
@@ -22,4 +22,4 @@ const RegisterCard = ({ desc, title, srcImg, registerPage }) => {
   );
 };
 
-export default RegisterCard;
+export default RegisterJobCard;
