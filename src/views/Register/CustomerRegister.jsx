@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "/src/assets/logo-no-background.svg";
+import Logo from "@assets/images/logo-no-background.svg";
 const CustomerRegister = () => {
   return (
     <main className="w-full flex">

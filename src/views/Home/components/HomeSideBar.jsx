@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "/src/assets/logo-no-background.svg";
+import Logo from "@assets/images/logo-no-background.svg";
 import { Link } from "react-router-dom";
 import ItemNav from "./ItemNav";
 const HomeSideBar = () => {
@@ -217,11 +217,11 @@ const HomeSideBar = () => {
                     <span className="block text-gray-700 text-sm font-semibold">
                       Alivika tony
                     </span>
-                    <a
-                      href="javascript:void(0)"
-                      className="block mt-px text-gray-600 hover:text-indigo-600 text-xs">
-                      View profile
-                    </a>
+                    <Link
+                      to="/home/profile"
+                      className="block mt-px text-gray-400   hover:text-indigo-600 text-sm">
+                      Perfil
+                    </Link>
                   </div>
                 </div>
               </div>

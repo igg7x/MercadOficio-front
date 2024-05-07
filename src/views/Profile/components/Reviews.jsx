@@ -1,6 +1,7 @@
 import React from "react";
 import Review from "./Review";
 import NewReview from "./NewReview";
+import Pagination from "@components/Pagination";
 const Reviews = () => {
   const reviews = [
     {
@@ -117,6 +118,7 @@ const Reviews = () => {
           <Review key={review.id} review={review} />
         ))}
       </div>
+      <Pagination />
     </>
   );
 };

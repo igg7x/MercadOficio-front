@@ -20,7 +20,7 @@ const Profile = () => {
     }
   }, []);
   return (
-    <div className=" w-full max-[640px]:w-screen">
+    <div className=" w-full max-[640px]:w-screen overflow-y-scroll">
       <HeaderMobile />
       <header className="flex gap-4 my-2 p-2  justify-start w-full">
         <img

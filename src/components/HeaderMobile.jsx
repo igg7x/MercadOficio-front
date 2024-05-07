@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import Logo from "../assets/logo-no-background.svg";
+import Logo from "@assets/images/logo-no-background.svg";
 
 const HeaderMobile = memo(() => {
   return (

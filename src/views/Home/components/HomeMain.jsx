@@ -5,17 +5,19 @@ import HeaderMobile from "@components/HeaderMobile";
 import Loading from "@components/Loading";
 import Error404 from "@components/Errors/Error404";
 import { useUsersOffering } from "@hooks/useUsersOffering";
+import Pagination from "@components/Pagination";
+
 const HomeMain = () => {
   const { usersOfferings, isLoading, isError, hasNextPage, fetchNextPage } =
     useUsersOffering();
   return (
-    <div className="[grid-area:main]     flex-col flex items-center overflow-y-auto ">
+    <div className="[grid-area:main] flex-col flex items-center overflow-y-auto ">
       <HeaderMobile />
       <header className="bg-gray-900 w-full  text-white pt-3 pb-2 md:pt-5 md:pb-2">
         <div className="container mx-auto px-2 md:px-6">
           <div className="max-w-2xl mx-auto text-center">
             <h1 className="text-xl  sm:text-3xl  md:text-4xl font-bold mb-4">
-              Encontra a los mejores profesionales
+              Encuentra a los mejores profesionales
             </h1>
             <p className="text-lg md:text-xl text-gray-300 mb-4">
               Aplique los ditintos filtros para encontrar el profesional que
@@ -83,7 +85,6 @@ const HomeMain = () => {
           </div>
         </div>
       </section>
-
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-4xl mx-auto">
           {usersOfferings.length > 0 && (
@@ -93,7 +94,6 @@ const HomeMain = () => {
               ))}
             </div>
           )}
-
           {isLoading && <Loading />}
           {isError && <Error404 />}
           {usersOfferings.length === 0 && !isLoading && !isError && (
@@ -104,6 +104,7 @@ const HomeMain = () => {
         </div>
       </div>
       <Outlet />
+      <Pagination />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Logo from "/src/assets/logo-no-background.svg";
+import Logo from "@assets/images/logo-no-background.svg";
 const OfferingRegister = () => {
   return (
     <main className="w-full flex">
