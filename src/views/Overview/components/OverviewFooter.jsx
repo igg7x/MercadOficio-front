@@ -1,43 +1,17 @@
 import React from "react";
 
-const footerNavs = [
-  {
-    href: "javascript:void()",
-    name: "Terms",
-  },
-  {
-    href: "javascript:void()",
-    name: "License",
-  },
-  {
-    href: "javascript:void()",
-    name: "Privacy",
-  },
-  {
-    href: "javascript:void()",
-    name: "About us",
-  },
-];
+import Logo from "@assets/images/logo-no-background.svg";
 const OverViewFooter = () => {
   return (
-    <footer className="pt-8">
+    <footer className="pt-2">
       <div className="max-w-screen-xl mx-auto px-4 border-t text-gray-600 md:px-8">
         <div className="justify-between sm:flex">
           <div className="flex-col justify-between mt-8 space-y-3">
-            <img src="src/assets/logo-no-background.svg" className="w-40" />
+            <img src={Logo} className="w-40" />
             <p className="max-w-md text-base">
               Simplificando tu búsqueda de servicios con Mercado Oficio: la
               plataforma de confianza para tus necesidades laborales.
             </p>
-            {/* <ul className="flex flex-wrap items-center gap-4 text-sm sm:text-base">
-              {footerNavs.map((item, idx) => (
-                <li className="text-gray-800 hover:text-gray-500 duration-150">
-                  <a key={idx} href={item.href}>
-                    {item.name}
-                  </a>
-                </li>
-              ))}
-            </ul> */}
           </div>
           <div className="mt-6">
             <p className="text-gray-700 font-semibold">Get the app</p>

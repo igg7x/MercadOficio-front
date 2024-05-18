@@ -1,18 +1,61 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import RegisterNav from "../Register/components/RegisterNav";
+import Logo from "@assets/images/logo-no-background.svg";
+import { Link } from "react-router-dom";
+import EyeIcon from "@assets/icons/EyeIcon";
+import EyeIconSlashed from "@assets/icons/EyeIconSlashed";
 const Login = () => {
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+  const [errors, setErrors] = useState({ email: "", password: "" });
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const handleClick = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
+
+  const handleInputChange = (ref) => {
+    const fieldName = ref.current.name;
+    const fieldValue = ref.current.value;
+
+    const newErrors = { ...errors };
+
+    switch (fieldName) {
+      case "password":
+        newErrors.password =
+          fieldValue.length === 0
+            ? "La Contraseña es requerida"
+            : fieldValue.length < 6
+            ? "La contraseña debe tener al menos 6 caracteres"
+            : "";
+        break;
+      case "email":
+        newErrors.email =
+          fieldValue.length === 0
+            ? "El email es requerido"
+            : !isValidEmail(fieldValue)
+            ? "El email no es valido"
+            : "";
+        break;
+      default:
+        break;
+    }
+
+    setErrors(newErrors);
+  };
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   return (
     <>
       <RegisterNav text={"Crear Cuenta"} route={"/register"} />
       <main className="w-full h-[80vh] flex flex-col items-center justify-center px-4">
-        <div className="max-w-sm w-full text-gray-600 space-y-5">
-          <div className="text-center pb-8">
-            {/* <img
-            src="src/assets/logo-no-background.svg"
-            className="mx-auto w-80"
-          /> */}
-            <div className="mt-5">
-              <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">
+        <div className="max-w-sm w-full text-gray-600 space-y-3">
+          <div className="text-center pb-8 mt-9 ">
+            <img src={Logo} className="mx-auto w-52 md:w-72" />
+            <div className="">
+              <h3 className="text-gray-800 text-xl font-bold sm:text-3xl">
                 Accede a tu cuenta
               </h3>
             </div>
@@ -21,18 +64,36 @@ const Login = () => {
             <div>
               <label className="font-medium">Email</label>
               <input
+                onChange={() => handleInputChange(emailRef)}
+                ref={emailRef}
+                name="email"
                 type="email"
-                required
                 className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
               />
+              {errors.email && (
+                <span className="text-red-500 text-sm">{errors.email}</span>
+              )}
             </div>
             <div>
               <label className="font-medium">Contraseña</label>
-              <input
-                type="password"
-                required
-                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-              />
+              <div className="relative">
+                <input
+                  onChange={() => handleInputChange(passwordRef)}
+                  ref={passwordRef}
+                  type={isPasswordVisible ? "text" : "password"}
+                  name="password"
+                  className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                />
+                <button
+                  type="button"
+                  onClick={handleClick}
+                  className="absolute top-5 bottom-5 right-5">
+                  {isPasswordVisible ? <EyeIcon /> : <EyeIconSlashed />}
+                </button>
+              </div>
+              {errors.password && (
+                <span className="text-red-500 text-sm">{errors.password}</span>
+              )}
             </div>
             <div className="flex items-center justify-between text-sm">
               <div className="flex items-center gap-x-3">
@@ -46,17 +107,23 @@ const Login = () => {
                   className="relative flex w-5 h-5 bg-white peer-checked:bg-indigo-600 rounded-md border ring-offset-2 ring-indigo-600 duration-150 peer-active:ring cursor-pointer after:absolute after:inset-x-0 after:top-[3px] after:m-auto after:w-1.5 after:h-2.5 after:border-r-2 after:border-b-2 after:border-white after:rotate-45"></label>
                 <span>Remember me</span>
               </div>
-              <a
-                href="javascript:void(0)"
-                className="text-center text-indigo-600 hover:text-indigo-500">
-                Forgot password?
-              </a>
+              <Link
+                to=""
+                className="text-center text-indigo-600 hover:underline hover:text-indigo-500">
+                Olvide la contraseña
+              </Link>
             </div>
-            <button className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150">
+            <button
+              type="submit"
+              className={`w-full px-4 py-2 text-white font-medium ${
+                errors.password || errors.email
+                  ? "bg-gray-500"
+                  : "bg-indigo-500 active:bg-indigo-600"
+              }     rounded-lg duration-150`}>
               Iniciar Sesión
             </button>
           </form>
-          <button className="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-50 duration-150 active:bg-gray-100">
+          {/* <button className="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-50 duration-150 active:bg-gray-100">
             <svg
               className="w-5 h-5"
               viewBox="0 0 48 48"
@@ -87,14 +154,14 @@ const Login = () => {
               </defs>
             </svg>
             Continue with Google
-          </button>
+          </button> */}
           <p className="text-center">
-            Don't have an account?{" "}
-            <a
-              href="javascript:void(0)"
-              className="font-medium text-indigo-600 hover:text-indigo-500">
-              Sign up
-            </a>
+            No Tienes Cuenta?{" "}
+            <Link
+              to="/register"
+              className="font-medium hover:underline text-indigo-600 hover:text-indigo-500">
+              Registrate Aqui
+            </Link>
           </p>
         </div>
       </main>

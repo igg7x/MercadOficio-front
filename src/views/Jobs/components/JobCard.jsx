@@ -149,7 +149,9 @@ const JobCard = ({
             <Button
               text={"Enviar"}
               type={"submit"}
-              styles={"bg-gray-500  hover:bg-blue-500"}
+              styles={` ${
+                errors.email || errors.name ? "bg-gray-500" : "bg-indigo-500"
+              }`}
               onClick={(e) => handleSubmit(e)}
             />
             <Button text={"Cancelar"} onClick={toogle} styles={"bg-red-500"} />

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import Logo from "@assets/images/logo-no-background.svg";
 const OverViewNav = () => {
   const [state, setState] = useState(false);
 
@@ -13,8 +13,8 @@ const OverViewNav = () => {
         <div className="flex items-center justify-between py-3 md:py-5 md:block">
           <a>
             <img
-              src="src/assets/logo-no-background.svg"
-              className=" max-[370px]: w-56 min-[371px]:w-72"
+              src={Logo}
+              className="max-[370px]: w-56 min-[371px]:w-64"
               alt="Mercado Oficio Logo"
             />
           </a>

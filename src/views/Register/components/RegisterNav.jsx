@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Logo from "@assets/images/logo-no-background.svg";
 const RegisterNav = ({ text, route }) => {
   const [state, setState] = useState(false);
   return (
@@ -9,9 +10,9 @@ const RegisterNav = ({ text, route }) => {
         <div className="flex items-center justify-between py-3 md:py-5 md:block">
           <Link to={"/"}>
             <img
-              src="src/assets/logo-no-background.svg"
-              className="w-52 md:w-64"
-              alt="Float UI logo"
+              src={Logo}
+              className="w-32 md:w-40"
+              alt="Mercado Oficio Logo"
             />
           </Link>
           <div className="md:hidden">

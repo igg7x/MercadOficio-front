@@ -108,8 +108,7 @@ const OfferingRegister = () => {
               Ofrece el mejor servicio
             </h3>
             <p className="text-gray-300">
-              Crea una cuenta y empieza a ofrece tu servicio al mejor
-              precio.Encuentra clientes y gana dinero
+              Crea una cuenta y empieza a ofrece tu servicio al mejor precio.
             </p>
             <div className="flex items-center -space-x-2 overflow-hidden">
               <img

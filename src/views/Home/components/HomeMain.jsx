@@ -3,13 +3,53 @@ import Card from "./Card";
 import { Outlet } from "react-router-dom";
 import HeaderMobile from "@components/HeaderMobile";
 import Loading from "@components/Loading";
-import Error404 from "@components/Errors/Error404";
-import { useUsersOffering } from "@hooks/useUsersOffering";
+import { useCategories } from "@hooks/useCategories";
+import Button from "@components/Button";
 import Pagination from "@components/Pagination";
-
+import StarIcon from "@assets/icons/StarIcon";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { fetchUsers, getUsersByFilters } from "@services/users";
+import { useFilteredUsersOffering } from "@hooks/useGetUsersOffering";
+import { useState, useCallback } from "react";
 const HomeMain = () => {
-  const { usersOfferings, isLoading, isError, hasNextPage, fetchNextPage } =
-    useUsersOffering();
+  const [filters, setFilters] = useState({});
+  const [debouncedFilters, setDebouncedFilters] = useState(filters);
+  // const { data, isLoading, isError } = useQuery({
+  //   queryKey: ["usersOffering"],
+  //   queryFn: fetchUsers,
+  //   refetchOnWindowFocus: false,
+  // });
+  const { data, isLoading, isError } = useFilteredUsersOffering(filters);
+  const usersOffering = data?.content || [];
+  const { categories, isLoading: isLoadingCategories } = useCategories();
+
+  const handleSubmit = (e) => {
+    if (isLoading) return;
+    e.preventDefault();
+
+    const dataForm = new FormData(e.target);
+    const newFilters = {};
+
+    if (dataForm.get("category") !== "none") {
+      newFilters.category = dataForm.get("category");
+    }
+    if (dataForm.get("location") !== "") {
+      newFilters.location = dataForm.get("location");
+    }
+    if (dataForm.get("min-calification") !== "") {
+      newFilters.calification = {
+        minCalification: dataForm.get("min-calification"),
+      };
+    }
+    if (dataForm.get("max-calification") !== "") {
+      newFilters.calification = {
+        ...newFilters.calification,
+        maxCalification: dataForm.get("max-calification"),
+      };
+    }
+    setFilters(newFilters);
+  };
+
   return (
     <div className="[grid-area:main] flex-col flex items-center overflow-y-auto ">
       <HeaderMobile />
@@ -29,7 +69,10 @@ const HomeMain = () => {
       <section className=" w-full bg-gray-100 py-6 md:py-6">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <form
+              onSubmit={(e) => handleSubmit(e)}
+              role="search"
+              className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
                 <label
                   className="block text-gray-700 font-medium mb-2"
@@ -37,66 +80,104 @@ const HomeMain = () => {
                   Categoria
                 </label>
                 <select
-                  className="w-full bg-white border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  nonce="category"
+                  placeholder="Filtra por categoria"
+                  name="category"
+                  className="w-full bg-white  border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   id="category">
-                  <option value="">Select a category</option>
-                  <option value="beach">Beach</option>
-                  <option value="mountain">Mountain</option>
-                  <option value="city">City</option>
-                  <option value="rural">Rural</option>
+                  <option value="none" defaultValue={"default"}>
+                    Selecciona una categoria
+                  </option>
+                  {categories.length > 0 ? (
+                    categories.map((category) => (
+                      <option key={category.name} value={category.id}>
+                        {category.name}
+                      </option>
+                    ))
+                  ) : isLoadingCategories ? (
+                    <option>
+                      {" "}
+                      <Loading />
+                    </option>
+                  ) : (
+                    <option> Error al cargar categorias</option>
+                  )}
                 </select>
               </div>
               <div>
                 <label
                   className="block text-gray-700 font-medium mb-2"
-                  htmlFor="city">
-                  City
+                  htmlFor="location">
+                  Ciudad
                 </label>
                 <input
                   className="w-full bg-white border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                  id="city"
-                  placeholder="Enter a city"
+                  id="location"
+                  placeholder="San Nicolas"
                   type="text"
+                  name="location"
                 />
               </div>
               <div>
                 <label
-                  className="block text-gray-700 font-medium mb-2"
+                  className="gap-1 flex  text-gray-700 font-medium   mb-2"
                   htmlFor="price-range">
                   Calificacion
+                  <StarIcon />
                 </label>
-                <div className="flex items-center">
+                <div className="flex items-center gap-2">
                   <input
                     className="w-1/2 bg-white border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                     id="min-price"
-                    placeholder="Min"
+                    placeholder="0,1,2,3,4,5"
                     type="number"
+                    min={0}
+                    max={5}
+                    name="min-calification"
                   />
                   <span className="mx-2">-</span>
-                  <input
-                    className="w-1/2 bg-white border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                    id="max-price"
-                    placeholder="Max"
-                    type="number"
-                  />
+                  <div className="flex w-full  gap-2">
+                    <label htmlFor="max-calification">Max</label>
+                    <input
+                      className="w-1/2 bg-white border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                      id="max-calification"
+                      placeholder="0,1,2,3,4,5"
+                      type="number"
+                      maxLength={1}
+                      max={5}
+                      min={0}
+                      name="max-calification"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
+              <div className="max-w-[150px] ">
+                <Button
+                  text={"Buscar"}
+                  type={"submit"}
+                  styles={"bg-gray-500 "}
+                />
+              </div>
+            </form>
           </div>
         </div>
       </section>
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-4xl mx-auto">
-          {usersOfferings.length > 0 && (
+          {usersOffering.length > 0 && (
             <div className="flex flex-col gap-1">
-              {usersOfferings.map((user, index) => (
+              {data.content.map((user, index) => (
                 <Card key={index} user={user} />
               ))}
             </div>
           )}
           {isLoading && <Loading />}
-          {isError && <Error404 />}
-          {usersOfferings.length === 0 && !isLoading && !isError && (
+          {isError && (
+            <div className="text-center text-2xl flex w-full h-[250px] justify-center items-center mt-10  text-gray-500">
+              {isError.message}
+            </div>
+          )}
+          {usersOffering.length === 0 && !isLoading && !isError && (
             <div className="text-center text-2xl flex w-full justify-center items-center mt-10  text-gray-500">
               No se encontraron usuarios{" "}
             </div>
