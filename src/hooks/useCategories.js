@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchCategories } from "@services/categories";
+import { getCategories } from "@services/categories";
 
 export const useCategories = () => {
   const {
@@ -8,7 +8,7 @@ export const useCategories = () => {
     isError,
   } = useQuery({
     queryKey: ["categories"],
-    queryFn: fetchCategories,
+    queryFn: getCategories,
     refetchOnWindowFocus: false,
   });
   return {

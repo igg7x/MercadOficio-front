@@ -134,7 +134,7 @@ const JobCard = ({
                   onChange={() => handleInputChange(emailRef)}
                   id="email"
                   className="focus:outline-none "
-                  placeholder="Email Ej.(@gmail.com)"
+                  placeholder="Email Ej.(JohnDoe@gmail.com)"
                   type="email"
                   name="email"
                   ref={emailRef}

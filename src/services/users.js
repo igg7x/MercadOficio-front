@@ -7,7 +7,6 @@ export const fetchUsers = async ({ pageParam = 1 }) => {
 };
 
 export const getUsersByFilters = async ({ pageParam = 1 }, filters) => {
-  console.log(filters);
   const response = await fetch(
     `http://localhost:8080/api/v1/user-offerings/search?page=${pageParam}&size=10`,
     {

@@ -14,11 +14,6 @@ import { useState, useCallback } from "react";
 const HomeMain = () => {
   const [filters, setFilters] = useState({});
   const [debouncedFilters, setDebouncedFilters] = useState(filters);
-  // const { data, isLoading, isError } = useQuery({
-  //   queryKey: ["usersOffering"],
-  //   queryFn: fetchUsers,
-  //   refetchOnWindowFocus: false,
-  // });
   const { data, isLoading, isError } = useFilteredUsersOffering(filters);
   const usersOffering = data?.content || [];
   const { categories, isLoading: isLoadingCategories } = useCategories();
@@ -72,7 +67,7 @@ const HomeMain = () => {
             <form
               onSubmit={(e) => handleSubmit(e)}
               role="search"
-              className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              className="grid grid-cols-1 md:grid-cols-3 gap-5">
               <div>
                 <label
                   className="block text-gray-700 font-medium mb-2"
@@ -83,7 +78,7 @@ const HomeMain = () => {
                   nonce="category"
                   placeholder="Filtra por categoria"
                   name="category"
-                  className="w-full bg-white  border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full bg-white   border border-gray-300 rounded-md py-2 px-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   id="category">
                   <option value="none" defaultValue={"default"}>
                     Selecciona una categoria
@@ -103,6 +98,13 @@ const HomeMain = () => {
                     <option> Error al cargar categorias</option>
                   )}
                 </select>
+                <div className="  max-[768px]:hidden  max-w-[150px] mt-5  ">
+                  <Button
+                    text={"Buscar"}
+                    type={"submit"}
+                    styles={"bg-gray-500 "}
+                  />
+                </div>
               </div>
               <div>
                 <label
@@ -111,35 +113,37 @@ const HomeMain = () => {
                   Ciudad
                 </label>
                 <input
-                  className="w-full bg-white border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full trucate  bg-white border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   id="location"
-                  placeholder="San Nicolas"
+                  placeholder="San Nicolas , Rosario , Capital"
                   type="text"
                   name="location"
                 />
               </div>
               <div>
                 <label
-                  className="gap-1 flex  text-gray-700 font-medium   mb-2"
+                  className="gap-2 flex  text-gray-700 font-medium   mb-2"
                   htmlFor="price-range">
                   Calificacion
                   <StarIcon />
                 </label>
-                <div className="flex items-center gap-2">
-                  <input
-                    className="w-1/2 bg-white border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                    id="min-price"
-                    placeholder="0,1,2,3,4,5"
-                    type="number"
-                    min={0}
-                    max={5}
-                    name="min-calification"
-                  />
-                  <span className="mx-2">-</span>
-                  <div className="flex w-full  gap-2">
+                <div className=" w-full flex gap-3">
+                  <div className="flex  w-full items-center gap-1">
+                    <label htmlFor="min-calification">Min</label>
+                    <input
+                      className="w-3/4  bg-white border border-gray-300 rounded-md py-2 px-1 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                      id="min-price"
+                      placeholder="0,1,2,3,4,5"
+                      type="number"
+                      min={0}
+                      max={5}
+                      name="min-calification"
+                    />
+                  </div>
+                  <div className="flex  w-full items-center gap-1">
                     <label htmlFor="max-calification">Max</label>
                     <input
-                      className="w-1/2 bg-white border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                      className=" w-3/4 bg-white border border-gray-300 rounded-md py-2 px-1 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                       id="max-calification"
                       placeholder="0,1,2,3,4,5"
                       type="number"
@@ -151,7 +155,7 @@ const HomeMain = () => {
                   </div>
                 </div>
               </div>
-              <div className="max-w-[150px] ">
+              <div className="md:hidden mx-6">
                 <Button
                   text={"Buscar"}
                   type={"submit"}

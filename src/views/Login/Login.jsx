@@ -50,12 +50,12 @@ const Login = () => {
   return (
     <>
       <RegisterNav text={"Crear Cuenta"} route={"/register"} />
-      <main className="w-full h-[80vh] flex flex-col items-center justify-center px-4">
+      <main className="w-full h-[90.8vh]  flex flex-col bg-gray-100 items-center justify-center px-4">
         <div className="max-w-sm w-full text-gray-600 space-y-3">
-          <div className="text-center pb-8 mt-9 ">
+          <div className="text-center pb-8 mt-4 ">
             <img src={Logo} className="mx-auto w-52 md:w-72" />
             <div className="">
-              <h3 className="text-gray-800 text-xl font-bold sm:text-3xl">
+              <h3 className="text-gray-800 text-lg font-bold sm:text-3xl">
                 Accede a tu cuenta
               </h3>
             </div>
