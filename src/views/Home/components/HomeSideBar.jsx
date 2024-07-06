@@ -25,7 +25,7 @@ const HomeSideBar = () => {
     },
     {
       href: "/home/jobs",
-      name: "Jobs",
+      name: "Trabajos",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -43,8 +43,27 @@ const HomeSideBar = () => {
       ),
     },
     {
+      href: "/home/post-job",
+      name: "Publicar Trabajo",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-5 h-5">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M12 8.25v7.5m3.75-3.75h-7.5m12.22-2.72A9.72 9.72 0 1012 21.72 9.72 9.72 0 0021.72 12z"
+          />
+        </svg>
+      ),
+    },
+    {
       href: "/home/profile",
-      name: "Profile",
+      name: "Perfil",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +145,7 @@ const HomeSideBar = () => {
     },
     {
       href: "/home/jobs",
-      name: "Jobs",
+      name: "Trabajos",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -164,7 +183,7 @@ const HomeSideBar = () => {
     },
     {
       href: "/home/profile",
-      name: "Profile",
+      name: "Perfil",
       icon: (
         <img
           src="https://randomuser.me/api/portraits/women/79.jpg"

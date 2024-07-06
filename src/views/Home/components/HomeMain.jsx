@@ -95,7 +95,7 @@ const HomeMain = () => {
                       <Loading />
                     </option>
                   ) : (
-                    <option> Error al cargar categorias</option>
+                    <option>Error al cargar categorias</option>
                   )}
                 </select>
                 <div className="  max-[768px]:hidden  max-w-[150px] mt-5  ">

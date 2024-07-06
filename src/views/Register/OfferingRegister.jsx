@@ -9,7 +9,6 @@ export async function loader() {
 export async function action({ request }) {
   const formData = await request.formData();
   const userOfferingData = Object.fromEntries(formData);
-  console.log(userOfferingData);
   return redirect("/home");
 }
 
@@ -111,11 +110,11 @@ function Checkbox({ value }) {
   return <input type="checkbox" id={value} name={value} value={value} />;
 }
 
-function Label({ children, ...props }) {
+export function Label({ children, ...props }) {
   return <label {...props}>{children}</label>;
 }
 
-function MapPinIcon(props) {
+export function MapPinIcon(props) {
   return (
     <svg
       {...props}
@@ -153,7 +152,7 @@ function ClipboardIcon(props) {
   );
 }
 
-function InfoIcon(props) {
+export function InfoIcon(props) {
   return (
     <svg
       {...props}
@@ -210,7 +209,7 @@ function DollarSignIcon(props) {
   );
 }
 
-function TagIcon(props) {
+export function TagIcon(props) {
   return (
     <svg
       {...props}
@@ -229,7 +228,7 @@ function TagIcon(props) {
   );
 }
 
-function Input({ id, ...props }) {
+export function Input({ id, ...props }) {
   return (
     <input
       className="outline-none  border  border-spacing-2 p-2 border-gray-400 rounded-lg w-full"

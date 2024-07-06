@@ -5,9 +5,9 @@ import { BriefcaseIcon } from "@assets/icons/BriefIcaseIcon";
 const SubRegisterMain = () => {
   return (
     <>
-      <div className="flex flex-col items-center justify-center min-h-[90.8dvh] bg-gray-100  px-4 md:px-6">
+      <div className="flex flex-col items-center justify-center  md:min-h-[90.8vh]  min-h-screen bg-gray-200 py-2 px-4 md:px-6">
         <div className="max-w-3xl w-full space-y-6">
-          <div className="text-center space-y-2">
+          <div className="text-center min-[640px]:space-y-2   ">
             <h1 className="text-3xl font-bold tracking-tighter md:text-4xl">
               Quiero crear una cuenta como ...
             </h1>

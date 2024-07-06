@@ -2,9 +2,13 @@ import React from "react";
 import JobCard from "./components/JobCard";
 import HeaderMobile from "@components/HeaderMobile";
 import Pagination from "@components/Pagination";
-import CreateNewJob from "./components/CreateNewJob";
+import { useJobsByCategories } from "../../hooks/useJobs";
+import Loading from "@components/Loading";
 
 const JobMain = () => {
+  const { data, isLoading, isError } = useJobsByCategories([
+    { name: "Educacion" },
+  ]);
   return (
     <>
       <section className="[grid-area:main] overflow-y-auto">
@@ -16,56 +20,22 @@ const JobMain = () => {
           <h4 className="text-xl  mb-6 md:mb-8 md:text-3xl">
             Aqui podras aplicar a las ofertas de trabajo segun tu categoria
           </h4>
-          <div className="container grid grid-cols-1 border-t-2 p-3   max-[375px]:grid-cols-1 max-[640px]:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-            <JobCard
-              position={"Desarrollador Frontend"}
-              userOffering={"Empresa de Desarrollo"}
-              location={"Santiago, Chile"}
-              publish_date={"12/12/2021"}
-              expiration_date={"12/3/2022"}
-              status={"Abierto"}
-            />
-            <JobCard
-              position={"Desarrollador Backend"}
-              userOffering={"Empresa de Desarrollo"}
-              location={"Santiago, Chile"}
-              publish_date={"12/12/2021"}
-              expiration_date={"12/3/2022"}
-              status={"Cerrado"}
-            />
-            <JobCard
-              position={"Desarrollador Fullstack"}
-              userOffering={"Empresa de Desarrollo"}
-              location={"Santiago, Chile"}
-              publish_date={"12/12/2021"}
-              expiration_date={"12/3/2022"}
-              status={"Cerrado"}
-            />
-            <JobCard
-              position={"Desarrollador Frontend"}
-              userOffering={"Empresa de Desarrollo"}
-              location={"Santiago, Chile"}
-              publish_date={"12/12/2021"}
-              expiration_date={"12/3/2022"}
-              status={"Abierto"}
-            />
-            <JobCard
-              position={"Desarrollador Backend"}
-              userOffering={"Empresa de Desarrollo"}
-              location={"Santiago, Chile"}
-              publish_date={"12/12/2021"}
-              expiration_date={"12/3/2022"}
-              status={"Abierto"}
-            />
-            <JobCard
-              position={"Desarrollador Fullstack"}
-              userOffering={"Empresa de Desarrollo"}
-              location={"Santiago, Chile"}
-              publish_date={"12/12/2021"}
-              expiration_date={"12/3/2022"}
-              status={"Abierto"}
-            />
-            <CreateNewJob />
+          <div className="container grid grid-cols-1 border-t-2 p-3   max-[450px]:grid-cols-1 max-[640px]:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            {data?.content.map((job) => (
+              <JobCard
+                key={job.jobId}
+                jobId={job.jobId}
+                position={job.title}
+                description={job.description}
+                category={job.category}
+                location={job.location}
+                publish_date={job.publish_date}
+                expiration_date={job.deadline_date}
+                userOffering={job.userCustomerEmail}
+                status={job.status ? "Cerrado" : "Abierto"}
+              />
+            ))}
+            {isLoading && <Loading />}
           </div>
         </div>
         <Pagination />

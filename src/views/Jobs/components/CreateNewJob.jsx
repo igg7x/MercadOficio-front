@@ -1,11 +1,22 @@
 import React from "react";
 import JobApplicationModal from "./JobApplicationModal";
 import { useModal } from "@hooks/useModal";
+import { useMutation } from "@tanstack/react-query";
+import { createJob } from "@services/jobs";
 import MarkIcon from "@assets/icons/MarkIcon";
+import {
+  Label,
+  Input,
+  TagIcon,
+  MapPinIcon,
+  InfoIcon,
+} from "../../Register/OfferingRegister";
+import { useCategories } from "@hooks/useCategories";
 
 const SelectCategories = () => {
+  const { categories, isLoading, isError } = useCategories();
   return (
-    <div className="relative w-72 max-w-full mx-auto ">
+    <div className="relative w-80 max-w-full mx-auto  ">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="absolute top-0 bottom-0 w-5 h-5 my-auto text-gray-400 right-3"
@@ -17,16 +28,26 @@ const SelectCategories = () => {
           clipRule="evenodd"
         />
       </svg>
-      <select className="w-full px-3 py-2 text-sm text-gray-600 bg-white border rounded-lg shadow-sm outline-none appearance-none focus:ring-offset-2 focus:ring-indigo-600 focus:ring-2">
-        <option>Project manager</option>
-        <option>Software engineer</option>
-        <option>IT manager</option>
-        <option>UI / UX designer</option>
+      <select
+        name="category"
+        className="w-full px-3 py-2.5 text-sm    border-gray-400 bg-white border rounded-lg shadow-sm outline-none appearance-none ">
+        {categories.map((category) => (
+          <option key={category.id} value={category.id}>
+            {category.name}
+          </option>
+        ))}
       </select>
     </div>
   );
 };
+const { mutate } = useMutation({
+  mutationFn: createJob,
+});
 
+const handelSubmit = (e) => {
+  e.preventDefault();
+  const data = new FormData(e.target);
+};
 const CreateNewJob = () => {
   const { show, toogle } = useModal();
   return (
@@ -37,42 +58,85 @@ const CreateNewJob = () => {
         Añadir Nuevo Trabajo
       </div>
       <JobApplicationModal show={show}>
-        <div className="bg-white relative p-4 rounded-md">
+        <div className="w-full relative bg-white p-4 rounded-md  max-w-2xl">
           <div className="absolute top-2 right-2" onClick={toogle}>
             <MarkIcon />
           </div>
-          <h2 className="text-lg font-semibold">Crear nuevo trabajo</h2>
-          <form className="flex flex-col gap-4">
-            <input
-              type="text"
-              placeholder="Nombre del trabajo"
-              className="p-2 border-2 border-gray-300 rounded-md"
-            />
-            <input
-              type="text"
-              placeholder="Ubicación"
-              className="p-2 border-2 border-gray-300 rounded-md"
-            />
-            <SelectCategories />
-            <input
-              type="date"
-              placeholder="Fecha de inicio"
-              className="p-2 border-2 border-gray-300 rounded-md"
-            />
-            <input
-              type="date"
-              placeholder="Fecha de cierre"
-              className="p-2 border-2 border-gray-300 rounded-md"
-            />
-            <textarea
-              placeholder="Descripción"
-              className="p-2 border-2 border-gray-300 rounded-md"></textarea>
+          <header>
+            <h1>
+              <InfoIcon className="inline-block h-6 w-6 mr-2" />
+              Crear nueva publicación de trabajo
+            </h1>
+            <p className="text-gray-500 text-sm ml-8">
+              Llene el formulario a continuación para publicar una nueva
+              oportunidad laboral.
+            </p>
+          </header>
+          <div className="mt-3">
+            <form className="grid gap-6" onSubmit={(e) => handelSubmit(e)}>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="title" className="text-sm">
+                    <FilePenIcon className="inline-block h-5 w-5 mr-2" />
+                    Titulo del Trabajo{" "}
+                  </Label>
+                  <Input
+                    id="title"
+                    name="title"
+                    placeholder="Desarrollador"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="location" className="text-sm">
+                    <MapPinIcon className="inline-block h-5 w-5 mr-2" />
+                    Ubicacion
+                  </Label>
+                  <Input
+                    id="location"
+                    placeholder="Buenos Aires ,Cordoba..."
+                    name="location"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="deadline" className="text-sm">
+                    <CalendarIcon className="inline-block h-5 w-5 mr-2" />
+                    Fecha límite de solicitud
+                  </Label>
+                  <Input id="deadline" name="deadline-date" type="date" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="category" className="text-sm">
+                    <TagIcon className="inline-block h-5 w-5 mr-2" />
+                    Categoria
+                  </Label>
+                  <SelectCategories />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="description" className="text-sm">
+                  <FileTextIcon className="inline-block h-5 w-5 mr-2" />{" "}
+                  Descripcion
+                </Label>
+                <Textarea
+                  name="description"
+                  id="description"
+                  placeholder="Estoy buscando un desarrollador de software para un proyecto de 3 meses. Debe tener experiencia en React y Node.js."
+                  className="min-h-[150px] min-w-full p-2 border-2 border-gray-400 rounded-md text-sm"
+                />
+              </div>
+            </form>
+          </div>
+          <CardFooter>
             <button
               type="submit"
-              className="bg-blue-500 text-white p-2 rounded-md">
-              Crear trabajo
+              className="ml-auto p-2 text-white bg-blue-500 rounded-md ">
+              Publicar
             </button>
-          </form>
+          </CardFooter>
         </div>
       </JobApplicationModal>
     </div>
@@ -80,3 +144,74 @@ const CreateNewJob = () => {
 };
 
 export default CreateNewJob;
+
+function Textarea({ children, ...props }) {
+  return <textarea {...props}>{children}</textarea>;
+}
+
+function CardFooter({ children }) {
+  return <footer className="flex items-center gap-4">{children}</footer>;
+}
+
+export function FileTextIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round">
+      <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+      <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+      <path d="M10 9H8" />
+      <path d="M16 13H8" />
+      <path d="M16 17H8" />
+    </svg>
+  );
+}
+
+export function FilePenIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round">
+      <path d="M12 22h6a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v10" />
+      <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+      <path d="M10.4 12.6a2 2 0 1 1 3 3L8 21l-4 1 1-4Z" />
+    </svg>
+  );
+}
+
+function CalendarIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round">
+      <path d="M8 2v4" />
+      <path d="M16 2v4" />
+      <rect width="18" height="18" x="3" y="4" rx="2" />
+      <path d="M3 10h18" />
+    </svg>
+  );
+}
