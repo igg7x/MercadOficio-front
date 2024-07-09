@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback, useLayoutEffect } from "react";
-import Plus from "../../../assets/icons/Plus";
+import { Plus } from "@assets/icons/Icons";
 
 function updateTextAreaHeight(textArea) {
   if (textArea == null) return;

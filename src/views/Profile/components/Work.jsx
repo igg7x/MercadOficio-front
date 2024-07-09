@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Plus from "../../../assets/icons/Plus";
+import { Plus } from "@assets/icons/Icons";
 const Work = () => {
   return (
     <section className="py-12 md:py-20 lg:py-12">

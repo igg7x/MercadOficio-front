@@ -5,7 +5,7 @@ import Logo from "@assets/images/logo-no-background.svg";
 const OverViewNav = () => {
   const [state, setState] = useState(false);
 
-  const navigation = [{ title: "Clientes", path: "javascript:void(0)" }];
+  const navigation = [{ title: "Clientes", path: "/" }];
 
   return (
     <nav className="bg-white border-b w-full md:static md:text-sm ">

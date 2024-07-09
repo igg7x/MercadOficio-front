@@ -1,5 +1,5 @@
 import React from "react";
-import Thumbsup from "../../../assets/icons/Thumbsup";
+import { Thumbsup } from "../../../assets/icons/Icons";
 const Review = ({ review }) => {
   return (
     <div key={review.id} className="flex border-b-2   justify-start gap-2 p-4">

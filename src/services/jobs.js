@@ -1,6 +1,12 @@
 export const getJobsByUserCustomer = async ({ pageParam = 1 }, email) => {
   const response = await fetch(
-    `http://localhost:8080/api/v1/jobs/customer/${email}&page=${pageParam}&size=10`
+    `http://localhost:8080/api/v1/jobs/customer/${email}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
   );
   const data = await response.json();
   return data;
@@ -36,7 +42,7 @@ export const postJobApplication = async (jobId, email) => {
 };
 
 export const createJob = async (job) => {
-  const result = await fetch(`http://localhost:8080/api/v1/jobs`, {
+  const result = await fetch(`http://localhost:8080/api/v1/jobs/create`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

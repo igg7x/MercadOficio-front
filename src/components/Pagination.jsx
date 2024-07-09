@@ -5,7 +5,7 @@ const Pagination = () => {
   const [currentPage, setCurrentPage] = useState("1");
 
   return (
-    <div className="max-w-screen-xl mb-4 mx-auto mt-12 px-4 text-gray-600 md:px-8">
+    <div className="max-w-screen-xl  flex justify-center items-end  mb-4 mx-auto mt-12 px-4 text-gray-600 md:px-8">
       <div
         className="hidden items-center justify-between sm:flex"
         aria-label="Pagination">

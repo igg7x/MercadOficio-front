@@ -1,16 +1,19 @@
 import React from "react";
-import Button from "@components/Button";
-import { InfoIcon } from "../../Register/OfferingRegister";
-import LocationIcon from "@assets/icons/LocationIcon";
-import MarkIcon from "@assets/icons/MarkIcon";
-import { useModal } from "@hooks/useModal";
-import JobApplicationModal from "./JobApplicationModal";
 import { useRef, useState } from "react";
-import { BriefcaseIcon } from "@assets/icons/BriefIcaseIcon";
-import { FilePenIcon } from "./CreateNewJob";
+import Button from "@components/Button";
+import { useModal } from "@hooks/useModal";
 import { Bounce, ToastContainer, toast } from "react-toastify";
-import { postJobApplication } from "../../../services/jobs";
 import "react-toastify/dist/ReactToastify.css";
+import { postJobApplication } from "@services/jobs";
+import JobApplicationModal from "./JobApplicationModal";
+
+import {
+  InfoIcon,
+  LocationIcon,
+  MarkIcon,
+  BriefcaseIcon,
+  FilePenIcon,
+} from "@assets/icons/Icons";
 
 export async function action() {
   const response = await postJobApplication();

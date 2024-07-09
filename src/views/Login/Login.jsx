@@ -1,9 +1,10 @@
 import React, { useRef, useState } from "react";
 import RegisterNav from "../Register/components/RegisterNav";
 import Logo from "@assets/images/logo-no-background.svg";
+import { EyeIcon, EyeIconSlashed } from "../../assets/icons/Icons";
+
 import { Link } from "react-router-dom";
-import EyeIcon from "@assets/icons/EyeIcon";
-import EyeIconSlashed from "@assets/icons/EyeIconSlashed";
+
 const Login = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);

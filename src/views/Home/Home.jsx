@@ -4,8 +4,9 @@ import JobMain from "../Jobs/JobMain";
 import HomeMain from "./components/HomeMain";
 import { Routes, Route } from "react-router-dom";
 import Profile from "../Profile/Profile";
-import PostJobs from "../Jobs/PostJobs";
+import PostJobs from "../Jobs/components/PostJobs";
 import { action as postJobApplication } from "../Jobs/components/JobCard";
+import JobDetails from "../Jobs/components/JobDetails";
 const Home = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
   useEffect(() => {
@@ -34,7 +35,9 @@ const Home = () => {
         <Route path="/" element={<HomeMain />} />
         <Route action={postJobApplication} path="jobs" element={<JobMain />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="post-job" element={<PostJobs />} />
+        <Route path="post-job/*" element={<PostJobs />}>
+          <Route path="details/:jobId" element={<JobDetails />} />
+        </Route>
       </Routes>
     </div>
   );

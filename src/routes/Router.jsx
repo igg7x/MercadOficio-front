@@ -10,6 +10,7 @@ import OfferingRegister, {
   loader as categoriesLoader,
 } from "../views/Register/OfferingRegister";
 import Home from "../views/Home/Home";
+
 const router = createBrowserRouter([
   {
     path: "/",

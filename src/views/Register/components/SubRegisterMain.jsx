@@ -1,7 +1,6 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
-import Button from "@components/Button";
-import { BriefcaseIcon } from "@assets/icons/BriefIcaseIcon";
+import { Link } from "react-router-dom";
+import { BriefcaseIcon } from "@assets/icons/Icons";
 const SubRegisterMain = () => {
   return (
     <>

@@ -3,14 +3,15 @@ import Card from "./Card";
 import { Outlet } from "react-router-dom";
 import HeaderMobile from "@components/HeaderMobile";
 import Loading from "@components/Loading";
-import { useCategories } from "@hooks/useCategories";
 import Button from "@components/Button";
 import Pagination from "@components/Pagination";
-import StarIcon from "@assets/icons/StarIcon";
+import { useCategories } from "@hooks/useCategories";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { fetchUsers, getUsersByFilters } from "@services/users";
 import { useFilteredUsersOffering } from "@hooks/useGetUsersOffering";
 import { useState, useCallback } from "react";
+import { StarIcon } from "@assets/icons/Icons";
+
 const HomeMain = () => {
   const [filters, setFilters] = useState({});
   const [debouncedFilters, setDebouncedFilters] = useState(filters);
