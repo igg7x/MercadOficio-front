@@ -9,7 +9,7 @@ import {
 
 const JobUserCustomerCard = ({ job }) => {
   return (
-    <div className="bg-white rounded-md max-h-44  shadow-md border border-gray-200">
+    <div className="bg-white rounded-md   shadow-md border border-gray-200">
       <p className="text-black  p-1 bg-gray-200  w-full text-sm flex items-center gap-1 ">
         <TagIcon className="h-4 w-4" />
         {job.category}

@@ -12,6 +12,7 @@ const PostJobsMain = () => {
     isLoading: isLoadingData,
   } = useJobsByUserCustomer("Esmeralda47@hotmail.com");
 
+  console.log(data);
   return (
     <section className="[grid-area:main] overflow-y-auto">
       <HeaderMobile />
