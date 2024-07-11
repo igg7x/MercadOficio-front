@@ -69,7 +69,6 @@ const Overview = () => {
           </div>
           <div className="flex-none mt-14 md:mt-0 md:max-w-xl">
             <img
-              // src="https://images.unsplash.com/photo-1573164713619-24c711fe7878?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1738&q=80"
               className=" md:rounded-tl-[108px]"
               alt=""
               src="src/assets/images/undraw_engineering_team_a7n2.svg"

@@ -1,18 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import HeaderMobile from "@components/HeaderMobile";
 import Pagination from "@components/Pagination";
 import CreateNewJob from "./components/CreateNewJob";
-import { useJobsByUserCustomer } from "@hooks/useJobs";
 import JobUserCustomerCard from "./components/JobUserCustomerCard";
-
+import Loading from "../../components/Loading";
+import { JobsContext } from "./components/JobsProvider";
 const PostJobsMain = () => {
-  const {
-    data,
-    isError,
-    isLoading: isLoadingData,
-  } = useJobsByUserCustomer("Esmeralda47@hotmail.com");
-
-  console.log(data);
+  const { data, isError, isLoading: isLoadingData } = useContext(JobsContext);
   return (
     <section className="[grid-area:main] overflow-y-auto">
       <HeaderMobile />
@@ -25,7 +19,7 @@ const PostJobsMain = () => {
         </h4>
         <ul className="container grid grid-cols-1 border-t-2 p-3   max-[450px]:grid-cols-1 max-[640px]:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           <CreateNewJob userCustomerEmail={"Esmeralda47@hotmail.com"} />
-          {isLoadingData && <p>Cargando...</p>}
+          {isLoadingData && <Loading />}
           {isError && <p>Error al cargar los datos</p>}
           {data?.content.map((job) => (
             <li key={job.jobId}>
