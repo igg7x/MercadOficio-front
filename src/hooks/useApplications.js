@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { getApplicationsByJobId } from "../services/job-applications";
+import { getApplicationsByJobId } from "../services/applications/applications.services";
 export const useApplications = (jobId) => {
-  console.log(jobId);
   const { data, isLoading, isError } = useQuery({
     queryKey: ["getApplications", jobId],
     queryFn: ({ queryKey }) => getApplicationsByJobId(queryKey[1]),
