@@ -3,7 +3,7 @@ import JobApplicationModal from "./JobApplicationModal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useModal } from "@hooks/useModal";
 import { useCategories } from "@hooks/useCategories";
-import { createJob } from "@services/jobs";
+import { createJob } from "@services/jobs/jobs.services";
 import { Label, Input } from "../../Register/OfferingRegister";
 import {
   TagIcon,
@@ -175,10 +175,10 @@ const CreateNewJob = ({ userCustomerEmail }) => {
 
 export default CreateNewJob;
 
-function Textarea({ children, ...props }) {
+export function Textarea({ children, ...props }) {
   return <textarea {...props}>{children}</textarea>;
 }
 
-function CardFooter({ children }) {
+export function CardFooter({ children }) {
   return <footer className="flex items-center gap-4">{children}</footer>;
 }

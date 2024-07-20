@@ -2,9 +2,9 @@ import React from "react";
 import { useRef, useState } from "react";
 import Button from "@components/Button";
 import { useModal } from "@hooks/useModal";
-import { Bounce, ToastContainer, toast } from "react-toastify";
+import { createJobApplication } from "@services/jobs/jobs.services";
 import "react-toastify/dist/ReactToastify.css";
-import { postJobApplication } from "@services/jobs";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 import JobApplicationModal from "./JobApplicationModal";
 
 import {
@@ -16,7 +16,7 @@ import {
 } from "@assets/icons/Icons";
 
 export async function action() {
-  const response = await postJobApplication();
+  const response = await createJobApplication();
   return response;
 }
 
@@ -74,10 +74,10 @@ const JobCard = ({
     if (nameRef.current.value === "" || emailRef.current.value === "") {
       return;
     }
-
-    const status = await postJobApplication(jobId, {
+    const data = await createJobApplication(jobId, {
       userOfferingEmail: emailRef.current.value,
     });
+
     if (status === 200)
       toast.success("Aplicación enviada exitosamente!", {
         position: "bottom-center",
@@ -156,9 +156,9 @@ const JobCard = ({
       <JobApplicationModal show={show}>
         <form
           mehtod="post"
-          onSubmit={() => handleSubmit()}
+          onSubmit={(e) => handleSubmit(e)}
           id="form-application"
-          className="grid gap-4  max-[560px]:m-2 py-4 flex-col px-3  relative  justify-center  items-center rounded-md  bg-white">
+          className="grid gap-2 max-[600px]:m-2 py-4 flex-col px-2 min-[600px]:min-w-[580px] relative    rounded-md  bg-white">
           <div className="absolute top-2 right-2" onClick={toogle}>
             <MarkIcon />
           </div>
@@ -166,7 +166,7 @@ const JobCard = ({
             <InfoIcon />
             Envio de postulacion
           </h2>
-          <div>
+          <div className="pl-8">
             <h4 className="text-sm text-gray-500">
               Trabajo publicado por{" "}
               <span className="text-black border-b-2">{userOffering}</span>
@@ -176,13 +176,13 @@ const JobCard = ({
               <span className="text-black border-b-2">{position}</span>"
             </h4>
           </div>
-          <div className="flex w-5  max-[560px]:flex-col  p-1 gap-2 first-letter:">
+          <div className="flex w-5  max-[600px]:flex-col  p-1 gap-2 first-letter:">
             <div className="flex-col space-y-2 gap-2">
               <label htmlFor="name" className="flex gap-1">
                 <FilePenIcon />
                 Nombre
               </label>
-              <div className="border-2  max-[560px]:w-60   rounded-lg p-2">
+              <div className="border-2  max-[600px]:w-60   rounded-lg p-2">
                 <input
                   onChange={() => handleInputChange(nameRef)}
                   name="name"
@@ -202,7 +202,7 @@ const JobCard = ({
                 <MailIcon />
                 Email
               </label>
-              <div className="border-2 max-[560px]:w-60   rounded-lg p-2">
+              <div className="border-2 max-[600px]:w-60   rounded-lg p-2">
                 <input
                   onChange={() => handleInputChange(emailRef)}
                   id="email"
@@ -218,7 +218,7 @@ const JobCard = ({
               )}
             </div>
           </div>
-          <div className="flex  p-1 flex-col gap-1 justify-center items-center">
+          <div className="flex p-1  gap-1 justify-center items-center">
             <Button
               text={"Enviar"}
               type={"submit"}

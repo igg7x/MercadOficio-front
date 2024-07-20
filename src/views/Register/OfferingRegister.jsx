@@ -1,6 +1,15 @@
 import React from "react";
 import { useLoaderData, Form, redirect } from "react-router-dom";
-import { getCategories } from "@services/categories";
+import { getCategories } from "@services/categories/categories.services";
+import {
+  ClipboardIcon,
+  InfoIcon,
+  MapPinIcon,
+  DollarSignIcon,
+  TagIcon,
+  CheckIcon,
+} from "@assets/icons/Icons";
+
 export async function loader() {
   const categories = await getCategories();
   return { categories };

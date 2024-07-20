@@ -4,9 +4,13 @@ import Pagination from "@components/Pagination";
 import CreateNewJob from "./components/CreateNewJob";
 import JobUserCustomerCard from "./components/JobUserCustomerCard";
 import Loading from "../../components/Loading";
-import { JobsContext } from "./components/JobsProvider";
+import { useJobsByUserCustomer } from "@hooks/useJobs";
 const PostJobsMain = () => {
-  const { data, isError, isLoading: isLoadingData } = useContext(JobsContext);
+  const {
+    data,
+    isError,
+    isLoading: isLoadingData,
+  } = useJobsByUserCustomer("Esmeralda47@hotmail.com");
   return (
     <section className="[grid-area:main] overflow-y-auto">
       <HeaderMobile />

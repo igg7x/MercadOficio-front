@@ -7,10 +7,10 @@ const Work = () => {
       <div className="container">
         <div className="mb-8 text-center">
           <h2 className="text-3xl font-inter tracking-tighter sm:text-4xl md:text-5xl">
-            My Work
+            Mi Trabajo
           </h2>
           <p className="mx-auto mt-4 max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-            Take a look at some of the projects I've worked on.
+            Aquí puedes subir imágenes de tus trabajos realizados.
           </p>
         </div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

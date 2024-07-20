@@ -2,17 +2,10 @@ import React, { useState } from "react";
 import Info from "./Info";
 import Work from "./Work";
 import Reviews from "./Reviews";
-const userData = {
-  name: "Alivika",
-  surname: "Tony",
-  email: "Alivikatonu@gmail.com",
-  biography:
-    "Con más de 15 años de experiencia en limpieza residencial y comercial, María se ha convertido en una experta en el arte de dejar impecables los espacios que toca. Su dedicación y atención al detalle son evidentes en cada tarea que realiza, desde limpiar pisos y ventanas hasta organizar armarios y cocinas.",
-};
 const ProfileMainSection = () => {
-  const TABS = ["Info", "Reviews", "Work"];
-
+  const TABS = ["Info", "Reseñas", "Trabajo"];
   const [selectedTab, setSelectedTab] = useState("Info");
+
   return (
     <>
       <div className="flex border-b">
@@ -28,8 +21,8 @@ const ProfileMainSection = () => {
         ))}
       </div>
       {selectedTab === "Info" ? (
-        <Info userData={userData} />
-      ) : selectedTab === "Work" ? (
+        <Info />
+      ) : selectedTab === "Trabajo" ? (
         <Work />
       ) : (
         <Reviews />

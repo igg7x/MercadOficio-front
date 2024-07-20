@@ -34,7 +34,7 @@ const Home = () => {
       <Routes>
         <Route path="/" element={<HomeMain />} />
         <Route action={postJobApplication} path="jobs" element={<JobMain />} />
-        <Route path="profile" element={<Profile />} />
+        <Route path="profile/:userEmail" element={<Profile />} />
         <Route path="post-job/*" element={<PostJobs />}>
           <Route path="details/:jobId" element={<JobDetails />} />
         </Route>

@@ -1,5 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import HeaderMobile from "@components/HeaderMobile";
+import Loading from "@components/Loading";
+import { Link } from "react-router-dom";
+import JobApplicationModal from "./JobApplicationModal";
+import { useModal } from "@hooks/useModal";
+import { useApplications } from "@hooks/useApplications";
+import { useParams } from "react-router-dom";
+import { CardFooter } from "./CreateNewJob";
 import {
   TagIcon,
   MapPinIcon,
@@ -7,34 +14,55 @@ import {
   FilePenIcon,
   FileTextIcon,
   MarkIcon,
+  StatusIcon,
+  CalendarIcon,
 } from "@assets/icons/Icons";
-import JobApplicationModal from "./JobApplicationModal";
-import { useModal } from "@hooks/useModal";
-import { useParams } from "react-router-dom";
-import { useApplications } from "@hooks/useApplications";
-import { JobsContext } from "./JobsProvider";
-import Loading from "../../../components/Loading";
-import { Link } from "react-router-dom";
-
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useJobsByID } from "@hooks/useJobs";
+import { updateJob } from "@services/jobs/jobs.services";
 const JobDetails = () => {
   const JOB_ID = useParams().jobId;
 
-  const { data, isError, isLoading: isLoadingData } = useContext(JobsContext);
-
-  if (isLoadingData) {
-    return <Loading />;
-  }
-
-  const job = data.content.find((job) => job.jobId === JOB_ID);
-
-  const { show, toogle } = useModal();
-
+  const { data: job, isError, isLoading: isLoadingData } = useJobsByID(JOB_ID);
   const {
     data: applications,
     isLoading: isLoadingApplications,
     isError: isErrorApplications,
   } = useApplications(JOB_ID);
+  const [selectedApplicant, setSelectedApplicant] = useState("");
+  const { show, toogle } = useModal();
 
+  const queryClient = useQueryClient();
+  const { mutate, isLoading: isLoadingMutation } = useMutation({
+    mutationFn: updateJob,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["jobsByID"],
+      });
+      toogle();
+    },
+  });
+
+  const handleSelectApplicant = (email) => {
+    if (isLoadingApplications) return;
+
+    setSelectedApplicant(email);
+    toogle();
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isLoadingApplications) return;
+    mutate({ userOfferingEmail: selectedApplicant, JOB_ID });
+  };
+
+  if (isLoadingData) {
+    return <Loading />;
+  }
+
+  if (isError) {
+    return <div>Error</div>;
+  }
   return (
     <section className="[grid-area:main] overflow-y-auto">
       <HeaderMobile />
@@ -67,19 +95,42 @@ const JobDetails = () => {
               <p className="text-gray-600 pl-7">{job.category}</p>
             </div>
           </div>
-          <div className="flex flex-col gap-1 text-wrap p-3">
-            <h2 className="font-semibold flex items-center gap-1">
-              <FileTextIcon />
-              Descripcion :
-            </h2>
-            <p className="text-gray-600 text-base  pl-7 max-w-2xl ">
-              {job.description}
-            </p>
+          <div className="flex p-3 text-lg max-[640px]:text-base items-center max-[640px]:gap-3 flex-wrap sm:items-center  md:gap-8">
+            <div className="flex flex-col gap-1">
+              <h2 className=" flex items-center gap-1 font-semibold">
+                <StatusIcon />
+                Estado:
+              </h2>
+              <p
+                className={`text-gray-600  rounded-md ${
+                  job.status ? "bg-gray-300" : " text-white bg-green-500"
+                } text-center ml-7 p-1`}>
+                {job.status ? "Cerrado" : "Abierto"}
+              </p>
+            </div>
+            <div className="flex flex-col gap-1 text-wrap p-3">
+              <h2 className="font-semibold flex  gap-1">
+                <CalendarIcon />
+                Fecha de publicacion :
+              </h2>
+              <p className="text-gray-600 text-base  pl-7 max-w-2xl ">
+                {job.publish_date}
+              </p>
+            </div>
+            <div className="flex flex-col gap-1 text-wrap p-3">
+              <h2 className="font-semibold flex  gap-1">
+                <FileTextIcon />
+                Descripcion :
+              </h2>
+              <p className="text-gray-600 text-base  pl-7 max-w-2xl ">
+                {job.description}
+              </p>
+            </div>
           </div>
         </div>
         <div className="flex flex-col w-full ">
-          <h1 className="text-xl font-bold underline">Aplicaciones :</h1>
-          {isLoadingApplications ? (
+          <h1 className="text-xl font-bold underline">Aplicaciones : </h1>
+          {isErrorApplications || isLoadingApplications ? (
             <Loading />
           ) : applications?.content?.length !== 0 ? (
             <table className="w-full table-auto text-sm text-left">
@@ -103,13 +154,18 @@ const JobDetails = () => {
                     <td className="pr-6 py-4 whitespace-nowrap">
                       {application.applyDate}
                     </td>
-                    <td className="text-center whitespace-nowrap">
-                      <button
-                        onClick={toogle}
-                        className="py-1.5 px-3 text-gray-600 duration-150 hover:bg-green-500 hover:text-white border rounded-lg">
-                        Elegir
-                      </button>
-                    </td>
+                    {!job.status && (
+                      <td className="text-center whitespace-nowrap">
+                        <button
+                          disabled={isLoadingMutation}
+                          onClick={() =>
+                            handleSelectApplicant(application.userOfferingEmail)
+                          }
+                          className="py-1.5 px-3 text-gray-600 duration-150 hover:bg-green-500 hover:text-white border rounded-lg">
+                          Elegir
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>
@@ -121,89 +177,41 @@ const JobDetails = () => {
                   <header>
                     <h1>
                       <InfoIcon className="inline-block h-6 w-6 mr-2" />
-                      Crear nueva publicación de trabajo
+                      Elegir Aplicante para el Trabajo :
                     </h1>
                     <p className="text-gray-500 text-sm ml-8">
-                      Llene el formulario a continuación para publicar una nueva
-                      oportunidad laboral.
+                      Esta acción no se puede deshacer. ¿Estás seguro de que
+                      quieres elegir a este aplicante?
+                    </p>
+                    <p className="text-gray-500 text-sm ml-8">
+                      Este trabajo pasara al estado de{" "}
+                      <span className="font-bold underline text-black">
+                        cerrado
+                      </span>{" "}
                     </p>
                   </header>
-                  {/* <div className="mt-3">
+                  <div className="mt-3">
                     <form
                       className="grid gap-6"
-                      onSubmit={(e) => handelSubmit(e)}>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="title" className="text-sm">
-                            <FilePenIcon className="inline-block h-5 w-5 mr-2" />
-                            Titulo del Trabajo{" "}
-                          </Label>
-                          <Input
-                            id="title"
-                            name="title"
-                            placeholder="Desarrollador"
-                            required
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="location" className="text-sm">
-                            <MapPinIcon className="inline-block h-5 w-5 mr-2" />
-                            Ubicacion
-                          </Label>
-                          <Input
-                            id="location"
-                            placeholder="Buenos Aires ,Cordoba..."
-                            name="location"
-                            required
-                          />
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="deadline" className="text-sm">
-                            <CalendarIcon className="inline-block h-5 w-5 mr-2" />
-                            Fecha límite de solicitud
-                          </Label>
-                          <Input
-                            id="deadline"
-                            name="deadline-date"
-                            type="date"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="category" className="text-sm">
-                            <TagIcon className="inline-block h-5 w-5 mr-2" />
-                            Categoria
-                          </Label>
-                          <SelectCategories />
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="description" className="text-sm">
-                          <FileTextIcon className="inline-block h-5 w-5 mr-2" />{" "}
-                          Descripcion
-                        </Label>
-                        <Textarea
-                          name="description"
-                          id="description"
-                          placeholder="Estoy buscando un desarrollador de software para un proyecto de 3 meses. Debe tener experiencia en React y Node.js."
-                          className="min-h-[75px]  max-h-[200px] min-w-full p-1 border-2 border-gray-400 rounded-md text-sm"
-                        />
-                      </div>
+                      onSubmit={(e) => handleSubmit(e)}>
                       <CardFooter>
                         <button
-                          disabled={isLoadingMutation}
                           type="submit"
-                          className={`ml-auto  ${
-                            isLoadingMutation
+                          className={`mx-auto  ${
+                            isLoadingApplications
                               ? "opacity-30"
                               : "hover:bg-blue-600"
                           }   p-2 text-white bg-blue-500 rounded-md `}>
-                          {isLoadingMutation ? "Publicando ..." : "Publicar"}
+                          {isLoadingApplications ? "Publicando ..." : "Elegir"}
+                        </button>
+                        <button
+                          onClick={toogle}
+                          className="mx-auto duration-150 hover:border-gray-600 border-2 p-2 bg-red-500 rounded-md text-white ">
+                          Cancelar
                         </button>
                       </CardFooter>
                     </form>
-                  </div> */}
+                  </div>
                 </div>
               </JobApplicationModal>
             </table>
@@ -227,16 +235,3 @@ const JobDetails = () => {
 };
 
 export default JobDetails;
-
-{
-  /* <td className="pr-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`px-3 py-2 rounded-full font-semibold text-xs ${
-                        item.status == "Active"
-                          ? "text-green-600 bg-green-50"
-                          : "text-blue-600 bg-blue-50"
-                      }`}>
-                      {item.status}
-                    </span>
-                  </td> */
-}

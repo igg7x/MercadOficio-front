@@ -1,20 +1,19 @@
 import React from "react";
-import Card from "./Card";
 import { Outlet } from "react-router-dom";
 import HeaderMobile from "@components/HeaderMobile";
 import Loading from "@components/Loading";
 import Button from "@components/Button";
 import Pagination from "@components/Pagination";
+import { TagIcon, MapPinIcon } from "@assets/icons/Icons";
 import { useCategories } from "@hooks/useCategories";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import { fetchUsers, getUsersByFilters } from "@services/users";
 import { useFilteredUsersOffering } from "@hooks/useGetUsersOffering";
 import { useState, useCallback } from "react";
 import { StarIcon } from "@assets/icons/Icons";
+import UserOfferingCard from "./UserOfferingCard";
 
 const HomeMain = () => {
   const [filters, setFilters] = useState({});
-  const [debouncedFilters, setDebouncedFilters] = useState(filters);
+  // const [debouncedFilters, setDebouncedFilters] = useState(filters);
   const { data, isLoading, isError } = useFilteredUsersOffering(filters);
   const usersOffering = data?.content || [];
   const { categories, isLoading: isLoadingCategories } = useCategories();
@@ -71,8 +70,9 @@ const HomeMain = () => {
               className="grid grid-cols-1 md:grid-cols-3 gap-5">
               <div>
                 <label
-                  className="block text-gray-700 font-medium mb-2"
+                  className="flex  gap-1  text-gray-700 font-medium mb-2"
                   htmlFor="category">
+                  <TagIcon />
                   Categoria
                 </label>
                 <select
@@ -109,9 +109,10 @@ const HomeMain = () => {
               </div>
               <div>
                 <label
-                  className="block text-gray-700 font-medium mb-2"
+                  className="flex gap-1 text-gray-700 font-medium mb-2"
                   htmlFor="location">
-                  Ciudad
+                  <MapPinIcon />
+                  Ubicacion
                 </label>
                 <input
                   className="w-full trucate  bg-white border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
@@ -123,10 +124,10 @@ const HomeMain = () => {
               </div>
               <div>
                 <label
-                  className="gap-2 flex  text-gray-700 font-medium   mb-2"
+                  className="gap-1 flex  text-gray-700 font-medium   mb-2"
                   htmlFor="price-range">
-                  Calificacion
                   <StarIcon />
+                  Calificacion
                 </label>
                 <div className=" w-full flex gap-3">
                   <div className="flex  w-full items-center gap-1">
@@ -172,7 +173,7 @@ const HomeMain = () => {
           {usersOffering.length > 0 && (
             <div className="flex flex-col gap-1">
               {data.content.map((user, index) => (
-                <Card key={index} user={user} />
+                <UserOfferingCard key={index} user={user} />
               ))}
             </div>
           )}
@@ -183,8 +184,13 @@ const HomeMain = () => {
             </div>
           )}
           {usersOffering.length === 0 && !isLoading && !isError && (
-            <div className="text-center text-2xl flex w-full justify-center items-center mt-10  text-gray-500">
+            <div className="text-center text-2xl flex flex-col w-full justify-center items-center mt-10  text-black">
               No se encontraron usuarios{" "}
+              <img
+                className="w-1/3"
+                src="src/assets/images/undraw_People_search_re_5rre.png"
+                alt="not-found"
+              />
             </div>
           )}
         </div>
