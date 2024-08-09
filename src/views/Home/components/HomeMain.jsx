@@ -1,23 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
+import Pagination from "@components/Pagination";
 import { Outlet } from "react-router-dom";
 import HeaderMobile from "@components/HeaderMobile";
 import Loading from "@components/Loading";
 import Button from "@components/Button";
-import Pagination from "@components/Pagination";
 import { TagIcon, MapPinIcon } from "@assets/icons/Icons";
 import { useCategories } from "@hooks/useCategories";
 import { useFilteredUsersOffering } from "@hooks/useGetUsersOffering";
-import { useState, useCallback } from "react";
 import { StarIcon } from "@assets/icons/Icons";
 import UserOfferingCard from "./UserOfferingCard";
 
 const HomeMain = () => {
   const [filters, setFilters] = useState({});
   // const [debouncedFilters, setDebouncedFilters] = useState(filters);
-  const { data, isLoading, isError } = useFilteredUsersOffering(filters);
-  const usersOffering = data?.content || [];
-  const { categories, isLoading: isLoadingCategories } = useCategories();
 
+  const { data, isLoading, isError, isPreviousData, page, nextPage, prevPage } =
+    useFilteredUsersOffering(filters);
+  const usersOffering = data?.content || [];
+
+  const { categories, isLoading: isLoadingCategories } = useCategories();
   const handleSubmit = (e) => {
     if (isLoading) return;
     e.preventDefault();
@@ -184,7 +185,7 @@ const HomeMain = () => {
             </div>
           )}
           {usersOffering.length === 0 && !isLoading && !isError && (
-            <div className="text-center text-2xl flex flex-col w-full justify-center items-center mt-10  text-black">
+            <div className="text-center text-2xl flex flex-col w-full justify-center items-center mt-10  text-black ">
               No se encontraron usuarios{" "}
               <img
                 className="w-1/3"
@@ -196,7 +197,13 @@ const HomeMain = () => {
         </div>
       </div>
       <Outlet />
-      <Pagination />
+      <Pagination
+        prevPage={prevPage}
+        nextPage={nextPage}
+        page={page}
+        isPreviousData={isPreviousData}
+        isDataLast={data?.last}
+      />
     </div>
   );
 };

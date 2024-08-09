@@ -1,18 +1,28 @@
-import React, { useContext } from "react";
+import React from "react";
 import HeaderMobile from "@components/HeaderMobile";
 import Pagination from "@components/Pagination";
 import CreateNewJob from "./components/CreateNewJob";
 import JobUserCustomerCard from "./components/JobUserCustomerCard";
 import Loading from "../../components/Loading";
-import { useJobsByUserCustomer } from "@hooks/useJobs";
+import { useJobs } from "@hooks/useJobs";
+import { getJobsByUserCustomer } from "@services/jobs/jobs.services";
 const PostJobsMain = () => {
   const {
     data,
     isError,
     isLoading: isLoadingData,
-  } = useJobsByUserCustomer("Esmeralda47@hotmail.com");
+    isPreviousData,
+    nextPage,
+    prevPage,
+    page,
+  } = useJobs(
+    getJobsByUserCustomer,
+    "jobsByUserCustomer",
+    "Esmeralda47@hotmail.com"
+  );
+
   return (
-    <section className="[grid-area:main] overflow-y-auto">
+    <section className="[grid-area:main] flex-col flex items-center overflow-y-auto">
       <HeaderMobile />
       <div className="flex flex-col  items-center mx-auto px-4 ">
         <h2 className="text-2xl font-bold  pt-4 mb-6 min-[640px]:text-center  md:text-4xl ">
@@ -32,7 +42,13 @@ const PostJobsMain = () => {
           ))}
         </ul>
       </div>
-      <Pagination />
+      <Pagination
+        isPreviousData={isPreviousData}
+        isDataLast={data?.last}
+        page={page}
+        nextPage={nextPage}
+        prevPage={prevPage}
+      />
     </section>
   );
 };
