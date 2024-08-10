@@ -1,13 +1,10 @@
 import request from "../request";
 import HTTP from "../../utils/methods";
 
-export const getUsersOfferingsByFilters = async (
-  { pageParam = 1 },
-  filters
-) => {
+export const getUsersOfferingsByFilters = async (pageParam, filters) => {
   const params = {
     method: HTTP.POST,
-    path: `user-offerings/search?page=${pageParam}&size=10`,
+    path: `user-offerings/search?page=${pageParam}&size=7`,
     body: filters,
   };
   return request({ params });

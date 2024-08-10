@@ -4,8 +4,6 @@ import OverViewFeatures from "./components/OverviewFeatures";
 import OverViewFooter from "./components/OverviewFooter";
 import OverViewNav from "./components/OverviewNav";
 
-// dame una opinion de un cliente sobr la expreciencia en la aplicacion
-
 const Overview = () => {
   const testimonials = [
     {

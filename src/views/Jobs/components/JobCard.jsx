@@ -13,6 +13,7 @@ import {
   MarkIcon,
   BriefcaseIcon,
   FilePenIcon,
+  MailIcon,
 } from "@assets/icons/Icons";
 
 export async function action() {
@@ -107,7 +108,7 @@ const JobCard = ({
   };
 
   return (
-    <div className="p-4  border-2  rounded-md border-gray-300 ">
+    <div className="p-4  border-2 max-h-96 truncate  rounded-md border-gray-300 ">
       <h3 className="text-lg font-semibold">{position}</h3>
       <h4 className=" flex gap-2 text-gray-500">
         <BriefcaseIcon className="h-4 w-4" />
@@ -236,22 +237,3 @@ const JobCard = ({
 };
 
 export default JobCard;
-
-function MailIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round">
-      <rect width="20" height="16" x="2" y="4" rx="2" />
-      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-    </svg>
-  );
-}

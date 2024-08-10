@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import HeaderMobile from "@components/HeaderMobile";
 import Loading from "@components/Loading";
 import Button from "@components/Button";
+import Error from "../../../components/Errors/Error";
 import { TagIcon, MapPinIcon } from "@assets/icons/Icons";
 import { useCategories } from "@hooks/useCategories";
 import { useFilteredUsersOffering } from "@hooks/useGetUsersOffering";
@@ -180,29 +181,27 @@ const HomeMain = () => {
           )}
           {isLoading && <Loading />}
           {isError && (
-            <div className="text-center text-2xl flex w-full h-[250px] justify-center items-center mt-10  text-gray-500">
-              {isError.message}
-            </div>
+            <Error
+              messaje={"Ups ! Ocurrio un error"}
+              img={"/src/assets/images/undraw_server_down_s4lk.png"}
+            />
           )}
           {usersOffering.length === 0 && !isLoading && !isError && (
-            <div className="text-center text-2xl flex flex-col w-full justify-center items-center mt-10  text-black ">
-              No se encontraron usuarios{" "}
-              <img
-                className="w-1/3"
-                src="src/assets/images/undraw_People_search_re_5rre.png"
-                alt="not-found"
-              />
-            </div>
+            <Error
+              messaje={"No se encontraron profesionales"}
+              img={"/src/assets/images/undraw_People_search_re_5rre.png"}
+            />
           )}
         </div>
       </div>
       <Outlet />
       <Pagination
-        prevPage={prevPage}
-        nextPage={nextPage}
-        page={page}
+        isDataExists={isLoading || isError}
         isPreviousData={isPreviousData}
         isDataLast={data?.last}
+        page={page}
+        nextPage={nextPage}
+        prevPage={prevPage}
       />
     </div>
   );

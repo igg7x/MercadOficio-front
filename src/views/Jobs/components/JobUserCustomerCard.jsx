@@ -9,13 +9,13 @@ import {
 
 const JobUserCustomerCard = ({ job }) => {
   return (
-    <div className="bg-white rounded-md   shadow-md border border-gray-200">
+    <div className="bg-white rounded-md max-h-96   truncate shadow-md border border-gray-200">
       <p className="text-black  p-1 bg-gray-200  w-full text-sm flex items-center gap-1 ">
         <TagIcon className="h-4 w-4" />
         {job.category}
       </p>
       <div className="p-2 text-base flex flex-col gap-1">
-        <h3 className=" flex  gap-1 font-bold ">
+        <h3 className=" flex   gap-1 font-bold ">
           <InfoIcon className="h-6 w-6" />
           {job.title}
         </h3>

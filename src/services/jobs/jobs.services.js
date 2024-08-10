@@ -1,18 +1,18 @@
 import request from "../request";
 import HTTP from "../../utils/methods";
 
-export const getJobsByUserCustomer = async ({ pageParam = 1 }, email) => {
+export const getJobsByUserCustomer = async (pageParam, email) => {
   const params = {
     method: HTTP.GET,
-    path: `jobs/customer/${email}`,
+    path: `jobs/customer/${email}?page=${pageParam}&size=7`,
   };
   return request({ params });
 };
 
-export const getJobsByCategories = async ({ pageParam = 1 }, categories) => {
+export const getJobsByCategories = async (pageParam, categories) => {
   const params = {
     method: HTTP.POST,
-    path: `jobs/all?page=${pageParam}&size=10`,
+    path: `jobs/all?page=${pageParam}&size=7`,
     body: categories,
   };
   return request({ params });

@@ -1,8 +1,7 @@
 import React from "react";
-import Logo from "@assets/images/logo-no-background.svg";
 import { Link } from "react-router-dom";
-import { UserIcon } from "../../../assets/icons/Icons";
-const HomeSideBar = () => {
+import { UserIcon } from "../assets/icons/Icons";
+const Navigation = () => {
   const navigation = [
     {
       href: "/home",
@@ -66,30 +65,8 @@ const HomeSideBar = () => {
       name: "Perfil",
       icon: <UserIcon className="w-5 h-5 " />,
     },
-  ];
-
-  const navsFooter = [
     {
-      href: "",
-      name: "Ayuda",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-5 h-5">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
-          />
-        </svg>
-      ),
-    },
-    {
-      href: "",
+      href: "/logout",
       name: "Salir",
       icon: (
         <svg
@@ -110,62 +87,19 @@ const HomeSideBar = () => {
   ];
 
   return (
-    <>
-      <nav className="[grid-area:sidebar]  max-[640px]:hidden   top-0 left-0 w-full h-full border-r bg-white space-y-8 sm:w-64">
-        <div className="flex flex-col h-full">
-          <div className="h-20 flex items-center px-8">
-            <img src={Logo} width={200} className="mx-auto" />
-          </div>
-          <div className="flex-1 flex flex-col h-full overflow-auto">
-            <ul className="px-4 text-sm font-medium flex-1">
-              {navigation.map((item, idx) => (
-                <li key={idx}>
-                  <Link
-                    to={item.href}
-                    className="flex items-center gap-x-2 text-gray-600 p-2 rounded-lg  hover:bg-gray-50 active:bg-gray-100 duration-150">
-                    <div className="text-gray-500">{item.icon}</div>
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <div>
-              <ul className="px-4 pb-4 text-sm font-medium">
-                {navsFooter.map((item, idx) => (
-                  <li key={idx}>
-                    <a
-                      to={item.href}
-                      className="flex items-center gap-x-2 text-gray-600 p-2 rounded-lg  hover:bg-gray-50 active:bg-gray-100 duration-150">
-                      <div className="text-gray-500">{item.icon}</div>
-                      {item.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-              <div className="py-4 px-4 border-t border-b">
-                <div className="flex items-center gap-x-4">
-                  <img
-                    src="https://randomuser.me/api/portraits/women/79.jpg"
-                    className="w-12 h-12 rounded-full"
-                  />
-                  <div>
-                    <span className="block text-gray-700 text-sm font-semibold">
-                      Alivika tony
-                    </span>
-                    <Link
-                      to="/home/profile"
-                      className="block mt-px text-gray-400   hover:text-indigo-600 text-sm">
-                      Perfil
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-    </>
+    <ul className="justify-end items-center space-y-6 md:flex md:space-x-6 md:space-y-0">
+      {navigation.map((item) => {
+        return (
+          <li key={item.name} className="text-gray-700 hover:text-indigo-600">
+            <Link to={item.href} className=" flex  items-center gap-1">
+              {item.icon}
+              {item.name}
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
   );
 };
 
-export default HomeSideBar;
+export default Navigation;
