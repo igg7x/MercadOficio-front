@@ -2,11 +2,10 @@ import React from "react";
 import { useRef, useState } from "react";
 import Button from "@components/Button";
 import { useModal } from "@hooks/useModal";
-import { createJobApplication } from "@services/jobs/jobs.services";
 import "react-toastify/dist/ReactToastify.css";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import JobApplicationModal from "./JobApplicationModal";
-
+import { useCreateJobApplication } from "../../../hooks/useApplications";
 import {
   InfoIcon,
   LocationIcon,
@@ -16,12 +15,7 @@ import {
   MailIcon,
 } from "@assets/icons/Icons";
 
-export async function action() {
-  const response = await createJobApplication();
-  return response;
-}
-
-const JobCard = ({
+export const JobCard = ({
   jobId,
   position,
   userOffering,
@@ -32,91 +26,26 @@ const JobCard = ({
   category,
 }) => {
   const { show, toogle } = useModal();
-  const nameRef = useRef(null);
-  const emailRef = useRef(null);
-  const [errors, setErrors] = useState({ name: "", email: "" });
-
-  const handleInputChange = (ref) => {
-    const fieldName = ref.current.name;
-    const fieldValue = ref.current.value;
-
-    const newErrors = { ...errors };
-
-    switch (fieldName) {
-      case "name":
-        newErrors.name =
-          fieldValue.length === 0 ? "El nombre es requerido" : "";
-        break;
-      case "email":
-        newErrors.email =
-          fieldValue.length === 0
-            ? "El email es requerido"
-            : !isValidEmail(fieldValue)
-            ? "El email no es valido"
-            : "";
-        break;
-      default:
-        break;
-    }
-
-    setErrors(newErrors);
-  };
-
-  const isValidEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const handleSubmit = async (e) => {
+  const { createApplication, isLoading } = useCreateJobApplication();
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (errors.name.length > 0 || errors.email.length > 0) {
+    if (isLoading) {
       return;
     }
-    if (nameRef.current.value === "" || emailRef.current.value === "") {
-      return;
-    }
-    const data = await createJobApplication(jobId, {
-      userOfferingEmail: emailRef.current.value,
-    });
-
-    if (status === 200)
-      toast.success("Aplicación enviada exitosamente!", {
-        position: "bottom-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Bounce,
-      });
-    else
-      toast.error("Error al enviar la aplicación", {
-        position: "bottom-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Bounce,
-      });
-
+    createApplication({ jobId });
     toogle();
   };
 
   return (
-    <div className="p-4  border-2 max-h-96 truncate  rounded-md border-gray-300 ">
-      <h3 className="text-lg font-semibold">{position}</h3>
+    <div className="p-4  border-2 max-h-96  rounded-md border-gray-300 ">
+      <h3 className="text-lg font-semibold truncate">{position}</h3>
       <h4 className=" flex gap-2 text-gray-500">
         <BriefcaseIcon className="h-4 w-4" />
-        <span className=" text-sm">{category}</span>
+        <span className="text-sm">{category}</span>
       </h4>
       <div className="flex items-center py-1  space-x-2 text-sm text-gray-500 dark:text-gray-400">
         <LocationIcon className="h-4 w-4" />
-        <span>{location}</span>
+        <span className="truncate">{location}</span>
       </div>
       <div className=" flex-col gap-2 space-y-2 items-center justify-center py-2">
         <p className="text-sm flex gap-2 text-gray-500 dark:text-gray-400">
@@ -127,9 +56,7 @@ const JobCard = ({
         </p>
         <p
           className={`p-1  text-center text-base  rounded-xl ${
-            status === "Abierto"
-              ? "bg-green-300"
-              : "status === 'Cerrado' bg-red-400"
+            status === "Abierto" ? "bg-green-300" : "bg-red-400"
           }`}>
           {status}
         </p>
@@ -141,7 +68,6 @@ const JobCard = ({
         styles={"bg-blue-500"}
         onClick={toogle}
       />
-
       <ToastContainer
         position="bottom-center"
         autoClose={5000}
@@ -159,7 +85,7 @@ const JobCard = ({
           mehtod="post"
           onSubmit={(e) => handleSubmit(e)}
           id="form-application"
-          className="grid gap-2 max-[600px]:m-2 py-4 flex-col px-2 min-[600px]:min-w-[580px] relative    rounded-md  bg-white">
+          className=" gap-2 m-2 py-4 flex-col px-2  relative rounded-md  bg-white">
           <div className="absolute top-2 right-2" onClick={toogle}>
             <MarkIcon />
           </div>
@@ -173,15 +99,18 @@ const JobCard = ({
               <span className="text-black border-b-2">{userOffering}</span>
             </h4>
             <h4 className="text-sm text-gray-500">
-              Completa tus datos para enviar tu postulacion para "{" "}
+              Estas por enviar una aplicacion para : "{" "}
               <span className="text-black border-b-2">{position}</span>"
             </h4>
           </div>
-          <div className="flex w-5  max-[600px]:flex-col  p-1 gap-2 first-letter:">
-            <div className="flex-col space-y-2 gap-2">
+          <div className="flex w-full max-[600px]:flex-col  p-1 gap-2 first-letter:">
+            {/* <div className="flex-col space-y-2 gap-2">
               <label htmlFor="name" className="flex gap-1">
                 <FilePenIcon />
                 Nombre
+                {errors.name && (
+                  <span className="text-red-500  text-sm">{errors.name}</span>
+                )}
               </label>
               <div className="border-2  max-[600px]:w-60   rounded-lg p-2">
                 <input
@@ -194,16 +123,16 @@ const JobCard = ({
                   ref={nameRef}
                 />
               </div>
-              {errors.name && (
-                <span className="text-red-500 text-sm">{errors.name}</span>
-              )}
-            </div>
-            <div className="flex-col space-y-2 gap-2">
+            </div> */}
+            {/* <div className="flex-col space-y-2 gap-2">
               <label htmlFor="email" className="flex gap-1">
                 <MailIcon />
                 Email
+                {errors.email && (
+                  <span className="text-red-500  text-sm">{errors.email}</span>
+                )}
               </label>
-              <div className="border-2 max-[600px]:w-60   rounded-lg p-2">
+              <div className="border-2  max-[600px]:w-60  rounded-lg p-2">
                 <input
                   onChange={() => handleInputChange(emailRef)}
                   id="email"
@@ -214,18 +143,14 @@ const JobCard = ({
                   ref={emailRef}
                 />
               </div>
-              {errors.email && (
-                <span className="text-red-500 text-sm">{errors.email}</span>
-              )}
-            </div>
+            </div> */}
           </div>
-          <div className="flex p-1  gap-1 justify-center items-center">
+          <div className="flex p-1 max-[600px]:flex-col gap-1 justify-center items-center">
             <Button
+              disabeled={isLoading}
               text={"Enviar"}
               type={"submit"}
-              styles={` ${
-                errors.email || errors.name ? "bg-gray-500" : "bg-indigo-500"
-              }`}
+              styles={` ${isLoading ? "bg-gray-500" : "bg-indigo-500"}`}
               onClick={(e) => handleSubmit(e)}
             />
             <Button text={"Cancelar"} onClick={toogle} styles={"bg-red-500"} />

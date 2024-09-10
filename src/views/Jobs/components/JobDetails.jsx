@@ -45,7 +45,6 @@ const JobDetails = () => {
 
   const handleSelectApplicant = (email) => {
     if (isLoadingApplications) return;
-
     setSelectedApplicant(email);
     toogle();
   };
