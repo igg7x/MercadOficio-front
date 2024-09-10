@@ -10,6 +10,7 @@ import { useCategories } from "@hooks/useCategories";
 import { useFilteredUsersOffering } from "@hooks/useGetUsersOffering";
 import { StarIcon } from "@assets/icons/Icons";
 import UserOfferingCard from "./UserOfferingCard";
+import { ErrorBoundary } from "@components/Errors/ErrorBoundaries";
 
 const HomeMain = () => {
   const [filters, setFilters] = useState({});
@@ -19,7 +20,11 @@ const HomeMain = () => {
     useFilteredUsersOffering(filters);
   const usersOffering = data?.content || [];
 
-  const { categories, isLoading: isLoadingCategories } = useCategories();
+  const {
+    categories,
+    isLoading: isLoadingCategories,
+    isError: isErrorCategories,
+  } = useCategories();
   const handleSubmit = (e) => {
     if (isLoading) return;
     e.preventDefault();
@@ -77,30 +82,34 @@ const HomeMain = () => {
                   <TagIcon />
                   Categoria
                 </label>
-                <select
-                  nonce="category"
-                  placeholder="Filtra por categoria"
-                  name="category"
-                  className="w-full bg-white   border border-gray-300 rounded-md py-2 px-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                  id="category">
-                  <option value="none" defaultValue={"default"}>
-                    Selecciona una categoria
-                  </option>
-                  {categories.length > 0 ? (
-                    categories.map((category) => (
-                      <option key={category.name} value={category.id}>
-                        {category.name}
-                      </option>
-                    ))
-                  ) : isLoadingCategories ? (
-                    <option>
-                      {" "}
-                      <Loading />
+                <ErrorBoundary
+                  result={categories}
+                  error={isErrorCategories}
+                  fallBackComponent={
+                    <div>
+                      <p className="text-red-600">Error al cargar categorias</p>
+                    </div>
+                  }>
+                  <select
+                    nonce="category"
+                    placeholder="Filtra por categoria"
+                    name="category"
+                    className="w-full bg-white   border border-gray-300 rounded-md py-2 px-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    id="category">
+                    <option defaultValue={"default"}>
+                      Selecciona una categoria
                     </option>
-                  ) : (
-                    <option>Error al cargar categorias</option>
-                  )}
-                </select>
+                    {categories.length > 0 ? (
+                      categories.map((category) => (
+                        <option key={category.name}>{category.name}</option>
+                      ))
+                    ) : isLoadingCategories ? (
+                      <option>Cargando categorias ...</option>
+                    ) : (
+                      <option>Error al cargar categorias</option>
+                    )}
+                  </select>
+                </ErrorBoundary>
                 <div className="  max-[768px]:hidden  max-w-[150px] mt-5  ">
                   <Button
                     text={"Buscar"}
@@ -173,7 +182,7 @@ const HomeMain = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-4xl mx-auto">
           {usersOffering.length > 0 && (
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col py-2 gap-1">
               {data.content.map((user, index) => (
                 <UserOfferingCard key={index} user={user} />
               ))}

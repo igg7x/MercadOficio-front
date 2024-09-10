@@ -1,45 +1,47 @@
 import React from "react";
-import {
-  UserIcon,
-  MapPinIcon,
-  DollarSignIcon,
-  CalendarIcon,
-} from "@assets/icons/Icons";
+import { UserIcon, MapPinIcon, BriefcaseIcon } from "@assets/icons/Icons";
 import { Link } from "react-router-dom";
 
 const UserOfferingCard = ({ user }) => {
+  const sendEmailToUser = () => {
+    const email = user.email;
+    const subject = "Asunto ,Contacto desde MercadOficio";
+    const body = "Hola, escribe tu mensaje aquí.";
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+  };
   return (
-    <li key={user.email} className="p-5 bg-white rounded-md shadow-sm">
-      <div>
-        <div className="justify-between gap-1  sm:flex">
-          <img
-            src="https://randomuser.me/api/portraits/women/80.jpg"
-            className="w-12 h-12 rounded-full"
-          />
+    <li
+      key={user.email}
+      className="list-none border border-gray-300 bg-white rounded-md shadow-sm">
+      <div className="flex flex-col gap-1">
+        <h4 className=" flex items-center w-full bg-gray-200 p-1  rounded-t-md gap-2 text-gray-600">
+          <BriefcaseIcon className="h-4 w-4" />
+          {user.categories.map((category) => (
+            <span key={category.name} className="text-sm">
+              {category.name},
+            </span>
+          ))}
+        </h4>
+        <div className="justify-between gap-1 px-3 py-2 flex">
+          <img src={user.picture} className="w-12 h-12 rounded-full" />
           <div className="flex-1 ml-2">
             <h3 className="text-xl font-medium text-cyan-600">
               {user.name} {user.surname}
             </h3>
-            <p className="text-gray-500 mt-2 pr-2">{user.email}</p>
+            <p className="text-gray-500  pr-2">{user.email}</p>
           </div>
-          <div className="mt-5 space-y-4 text-sm sm:mt-0 sm:space-y-2">
-            <span className="flex items-center text-gray-500">
-              <CalendarIcon className="w-6 h-6 text-gray-400" />
-              {user.workDayStart.substring(0, 5)} -{" "}
-              {user.workDayEnd.substring(0, 5)}
-            </span>
-            <span className="flex items-center justify-center bg-slate-200 rounded-full p-1 max-w-[100px] text-gray-500">
-              <DollarSignIcon />
-              {`${user.price}/hr`}
-            </span>
-          </div>
+          <div className="mt-5 space-y-4 text-sm sm:mt-0 sm:space-y-2"></div>
         </div>
-        <div className="mt-4 items-center space-y-4 text-sm sm:flex sm:space-x-4 sm:space-y-0">
+        <div className="items-center px-3 py-1 gap-3 max-[640px]:items-start  text-sm flex  sm:space-x-4 sm:space-y-0">
           <span className="flex gap-1 items-center text-gray-500">
             <MapPinIcon className="w-6 h-6 text-gray-400" />
             {user.location}
           </span>
-          <button className="px-3  flex items-center gap-1 py-1.5 text-sm text-indigo-600 duration-150 bg-indigo-50 rounded-lg hover:bg-indigo-100 active:bg-indigo-200">
+          <button
+            onClick={sendEmailToUser}
+            className="px-3  flex items-center gap-1 py-1.5 text-sm text-indigo-600 duration-150 bg-indigo-50 rounded-lg hover:bg-indigo-100 active:bg-indigo-200">
             <svg
               className="w-6 h-6 text-gray-400   inset-y-0 my-auto"
               xmlns="http://www.w3.org/2000/svg"
