@@ -5,7 +5,6 @@ import Reviews from "./Reviews";
 const ProfileMainSection = () => {
   const TABS = ["Info", "Reseñas", "Trabajo"];
   const [selectedTab, setSelectedTab] = useState("Info");
-
   return (
     <>
       <div className="flex border-b">

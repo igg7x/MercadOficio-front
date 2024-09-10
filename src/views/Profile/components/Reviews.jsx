@@ -1,124 +1,64 @@
 import React from "react";
 import Review from "./Review";
-import NewReview from "./NewReview";
+import { MessajesIcon } from "../../../assets/icons/Icons";
+import Error from "@components/Errors/Error";
 import Pagination from "@components/Pagination";
+import { useReviews } from "@hooks/useReviews";
+import Loading from "@components/Loading";
+import { useParams } from "react-router-dom";
 const Reviews = () => {
-  const reviews = [
-    {
-      id: 1,
-
-      userNameReviewing: "John Doe",
-      emailUserReviewing: "johnDoe@Gamil.com",
-
-      imageUserReviewing: " https://randomuser.me/api/portraits/men/50.jpg",
-
-      Text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec.",
-
-      date: "14/03/2021",
-
-      num_likes: 5,
-    },
-    {
-      id: 2,
-
-      userNameReviewing: "John Doe",
-      emailUserReviewing: "johnDoe@Gamil.com",
-
-      imageUserReviewing: " https://randomuser.me/api/portraits/men/50.jpg",
-
-      Text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec.",
-
-      date: "14/03/2021",
-
-      num_likes: 5,
-    },
-    {
-      id: 3,
-
-      userNameReviewing: "John Doe",
-      emailUserReviewing: "johnDoe@Gamil.com",
-
-      imageUserReviewing: " https://randomuser.me/api/portraits/men/50.jpg",
-
-      Text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec.",
-
-      date: "14/03/2021",
-
-      num_likes: 5,
-    },
-    {
-      id: 4,
-
-      userNameReviewing: "John Doe",
-      emailUserReviewing: "johnDoe@Gamil.com",
-
-      imageUserReviewing: " https://randomuser.me/api/portraits/men/50.jpg",
-
-      Text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec.",
-
-      date: "14/03/2021",
-
-      num_likes: 5,
-    },
-    {
-      id: 5,
-
-      userNameReviewing: "John Doe",
-      emailUserReviewing: "johnDoe@Gamil.com",
-
-      imageUserReviewing: " https://randomuser.me/api/portraits/men/50.jpg",
-
-      Text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec.",
-
-      date: "14/03/2021",
-
-      num_likes: 5,
-    },
-    {
-      id: 6,
-
-      userNameReviewing: "John Doe",
-      emailUserReviewing: "johnDoe@Gamil.com",
-
-      imageUserReviewing: " https://randomuser.me/api/portraits/men/50.jpg",
-
-      Text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec.",
-
-      date: "14/03/2021",
-
-      num_likes: 5,
-    },
-    {
-      id: 7,
-
-      userNameReviewing: "John Doe",
-      emailUserReviewing: "johnDoe@Gamil.com",
-
-      imageUserReviewing: " https://randomuser.me/api/portraits/men/50.jpg",
-
-      Text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec.",
-
-      date: "14/03/2021",
-
-      num_likes: 5,
-    },
-  ];
+  let { userEmail } = useParams();
+  const {
+    data: reviews,
+    isError,
+    isLoading,
+    isPreviousData,
+    nextPage,
+    prevPage,
+    page,
+  } = useReviews(userEmail);
 
   return (
     <>
       <div className="p-4">
-        <h2 className="text-3xl font-inter">Reseñas</h2>
+        <h2 className="text-3xl flex items-center gap-0.5 font-inter">
+          <MessajesIcon />
+          Reseñas
+        </h2>
         <p className="text-gray-500 dark:text-gray-400">
-          Escribe una reseña sobre tu experiencia con el profesional.
+          Aqui podras ver las reseñas que han dejado otros usuarios sobre ti
         </p>
       </div>
-      <NewReview />
+      {/* <NewReview /> */}
       <div className="flex-col px-4 py-1 mx-4 items-center justify-center   max-[640px]:mb-14">
-        {reviews.map((review) => (
-          <Review key={review.id} review={review} />
-        ))}
+        {isLoading ? (
+          <Loading />
+        ) : isError ? (
+          <Error
+            messaje={"Ups ! Ocurrio un error"}
+            img={"/src/assets/images/undraw_server_down_s4lk.png"}
+          />
+        ) : reviews.content.length === 0 ? (
+          <Error
+            messaje={"No se encontraron reseñas"}
+            img={"/src/assets/images/undraw_People_search_re_5rre.png"}
+          />
+        ) : (
+          reviews.content.map((review) => (
+            <Review key={review.id} review={review} />
+          ))
+        )}
       </div>
-      <Pagination />
+      <div className="flex items-center w-full justify-center">
+        <Pagination
+          isDataExists={isLoading || isError}
+          isPreviousData={isPreviousData}
+          isDataLast={reviews?.last}
+          page={page}
+          nextPage={nextPage}
+          prevPage={prevPage}
+        />
+      </div>
     </>
   );
 };
