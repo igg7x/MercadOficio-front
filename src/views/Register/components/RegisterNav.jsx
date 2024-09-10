@@ -2,16 +2,28 @@ import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "@assets/images/logo-no-background.svg";
-const RegisterNav = ({ text, route }) => {
+import { ChevronLeftIcon } from "../../../assets/icons/Icons";
+const RegisterNav = () => {
   const [state, setState] = useState(false);
   return (
     <nav className="bg-white border-b-2 w-full md:static md:text-sm ">
       <div className="items-center px-4 max-w-screen-xl mx-auto md:flex md:px-8">
+        <div className="justify-end items-center space-y-6 md:flex md:space-x-6 md:space-y-0">
+          <div className="g:block text-lg  hidden  font-semibold py-3 text-center text-gray-700 hover:text-indigo-600 border rounded-lg md:border-none">
+            <ChevronLeftIcon />
+          </div>
+        </div>
+        {/* <div
+          className={`flex-1 pb-3 mt-8 md:block md:pb-0 md:mt-0 ${
+            state ? "block" : "hidden"
+          }`}>
+
+          </div> */}
         <div className="flex items-center justify-between py-3 md:py-5 md:block">
           <Link to={"/"}>
             <img
               src={Logo}
-              className="w-32 md:w-40"
+              className="w-48 md:w-40"
               alt="Mercado Oficio Logo"
             />
           </Link>
@@ -47,18 +59,6 @@ const RegisterNav = ({ text, route }) => {
                 </svg>
               )}
             </button>
-          </div>
-        </div>
-        <div
-          className={`flex-1 pb-3 mt-8 md:block md:pb-0 md:mt-0 ${
-            state ? "block" : "hidden"
-          }`}>
-          <div className="justify-end items-center space-y-6 md:flex md:space-x-6 md:space-y-0">
-            <Link
-              to={route}
-              className="block text-lg  font-semibold py-3 text-center text-gray-700 hover:text-indigo-600 border rounded-lg md:border-none">
-              {text}
-            </Link>
           </div>
         </div>
       </div>

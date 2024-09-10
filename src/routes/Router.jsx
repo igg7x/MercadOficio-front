@@ -1,17 +1,16 @@
 import React from "react";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { useRoutes } from "react-router-dom";
 import Overview from "../views/Overview/Overview";
 import Error404 from "@components/Errors/Error404";
 import Login from "../views/Login/Login";
-import Register, { action as registerAction } from "../views/Register/Register";
+import Register from "../views/Register/Register";
 import SubRegister from "../views/Register/SubRegister";
-import OfferingRegister, {
-  action as offeringAction,
-  loader as categoriesLoader,
-} from "../views/Register/OfferingRegister";
+import OfferingRegister from "../views/Register/OfferingRegister";
 import Home from "../views/Home/Home";
-
-const router = createBrowserRouter([
+import CallBackPage from "../auth/CallBackPage";
+import AuthenticationGuard from "../auth/AuthenticationGuard";
+import PostLoginPage from "../auth/PostLoginPage";
+const router = [
   {
     path: "/",
     element: <Overview />,
@@ -27,29 +26,37 @@ const router = createBrowserRouter([
   },
   {
     path: "/register",
-    action: registerAction,
     element: <Register />,
   },
   {
-    path: "/subregister",
+    path: "/subregister/*",
+    // element: <AuthenticationGuard component={SubRegister} />,
     element: <SubRegister />,
     children: [
       {
-        path: "provider",
+        path: "offering",
+        // element: <AuthenticationGuard component={OfferingRegister} />,
         element: <OfferingRegister />,
-        loader: categoriesLoader,
-        action: offeringAction,
       },
     ],
   },
   {
-    path: "/home/*",
-    element: <Home />,
+    path: "/callback",
+    element: <CallBackPage />,
   },
-]);
+  {
+    path: "/postlogin",
+    element: <PostLoginPage />,
+  },
+  {
+    path: "/home/*",
+    element: <AuthenticationGuard component={Home} />,
+  },
+];
 
 const Router = () => {
-  return <RouterProvider router={router} />;
+  let AppRoutes = useRoutes(router);
+  return AppRoutes;
 };
 
 export default Router;

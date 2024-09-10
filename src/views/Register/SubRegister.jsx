@@ -5,7 +5,7 @@ import { Routes, Route, Outlet } from "react-router-dom";
 const SubRegister = () => {
   return (
     <>
-      <RegisterNav text={"Iniciar Sesion"} route={"/login"} />
+      <RegisterNav />
       <Routes>
         <Route path="/" element={<SubRegisterMain />} />
       </Routes>

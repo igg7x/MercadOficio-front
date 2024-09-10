@@ -1,11 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import RegisterNav from "../Register/components/RegisterNav";
 import Logo from "@assets/images/logo-no-background.svg";
 import { EyeIcon, EyeIconSlashed } from "../../assets/icons/Icons";
-
+import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
-
 const Login = () => {
+  const { loginWithRedirect, getAccessTokenSilently } = useAuth0();
+
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const [errors, setErrors] = useState({ email: "", password: "" });
@@ -46,6 +47,23 @@ const Login = () => {
   const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  };
+
+  useEffect(() => {
+    const setTokenAuth = async () => {
+      const auth0Token = await getAccessTokenSilently({
+        authorizationParams: { audience: import.meta.env.VITE_AUTH0_AUDIENCE },
+      });
+      localStorage.setItem("authToken", auth0Token);
+    };
+
+    setTokenAuth();
+  }, [getAccessTokenSilently]);
+
+  const handleLogin = async () => {
+    await loginWithRedirect({
+      appState: { returnTo: "/postlogin" },
+    });
   };
 
   return (
@@ -124,13 +142,15 @@ const Login = () => {
               Iniciar Sesión
             </button>
           </form>
-          {/* <button className="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-50 duration-150 active:bg-gray-100">
+          <button
+            onClick={handleLogin}
+            className="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-50 duration-150 active:bg-gray-100">
             <svg
               className="w-5 h-5"
               viewBox="0 0 48 48"
               fill="none"
               xmlns="http://www.w3.org/2000/svg">
-              <g clip-path="url(#clip0_17_40)">
+              <g clipPath="url(#clip0_17_40)">
                 <path
                   d="M47.532 24.5528C47.532 22.9214 47.3997 21.2811 47.1175 19.6761H24.48V28.9181H37.4434C36.9055 31.8988 35.177 34.5356 32.6461 36.2111V42.2078H40.3801C44.9217 38.0278 47.532 31.8547 47.532 24.5528Z"
                   fill="#4285F4"
@@ -154,8 +174,8 @@ const Login = () => {
                 </clipPath>
               </defs>
             </svg>
-            Continue with Google
-          </button> */}
+            Continuar con Google
+          </button>
           <p className="text-center">
             No Tienes Cuenta?{" "}
             <Link

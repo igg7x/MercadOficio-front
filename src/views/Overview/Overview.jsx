@@ -42,15 +42,15 @@ const Overview = () => {
               mejores talentos en nuestro mercado de oficios.
             </p>
             <div className="items-center gap-x-3 space-y-3 sm:flex sm:space-y-0">
-              <Link
+              {/* <Link
                 to={"/register"}
                 className="block py-2 px-4 text-center text-white font-medium bg-gray-500 duration-150 hover:bg-indigo-500 active:bg-indigo-700 rounded-lg shadow-lg hover:shadow-none">
                 Crear cuenta
-              </Link>
+              </Link> */}
               <Link
-                to={"/login"}
+                to={"/register"}
                 className="flex items-center justify-center gap-x-2 py-2 px-4 text-gray-700 hover:text-gray-500 font-medium duration-150 active:bg-gray-100 border rounded-lg md:inline-flex">
-                Iniciar sesión
+                Ingresar
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
