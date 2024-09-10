@@ -1,0 +1,4 @@
+export const ROLES = {
+  USER_OFFERING: "USER_OFFERING",
+  USER_CUSTOMER: "USER_CUSTOMER",
+};
