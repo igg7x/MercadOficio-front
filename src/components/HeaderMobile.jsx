@@ -46,7 +46,7 @@ const HeaderMobile = memo(() => {
           </div>
         </div>
         <div
-          className={`flex-1 pb-3  mt-8 md:block md:pb-0 md:mt-0 ${
+          className={`flex-1 pb-1  mt-4 md:block md:pb-0 md:mt-0 ${
             state ? "block" : "hidden"
           }`}>
           <Navigation />

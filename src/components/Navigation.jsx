@@ -1,26 +1,29 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { UserIcon } from "../assets/icons/Icons";
+import { useAuth0 } from "@auth0/auth0-react";
+import { ROLES } from "../utils/roles";
+import { Home, SearchIcon2 } from "../assets/icons/Icons";
+import { useUserDataContext } from "../views/Profile/components/ProfileContext";
 const Navigation = () => {
+  const { userData } = useUserDataContext();
+  const userRoles = userData?.roles || [];
+  const { logout, user } = useAuth0();
+  const handleLogout = () => {
+    logout({ logoutParams: { returnTo: window.location.origin } });
+    localStorage.removeItem("authToken");
+  };
   const navigation = [
     {
       href: "/home",
       name: "Inicio",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-5 h-5">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M6 6.878V6a2.25 2.25 0 012.25-2.25h7.5A2.25 2.25 0 0118 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 004.5 9v.878m13.5-3A2.25 2.25 0 0119.5 9v.878m0 0a2.246 2.246 0 00-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0121 12v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6c0-.98.626-1.813 1.5-2.122"
-          />
-        </svg>
-      ),
+      icon: <Home />,
+      rolesAllowed: [ROLES.USER_CUSTOMER, ROLES.USER_OFFERING],
+    },
+    {
+      href: "/home/search",
+      name: "Buscar",
+      icon: <SearchIcon2 />,
+      rolesAllowed: [ROLES.USER_CUSTOMER, ROLES.USER_OFFERING],
     },
     {
       href: "/home/jobs",
@@ -40,6 +43,7 @@ const Navigation = () => {
           />
         </svg>
       ),
+      rolesAllowed: [ROLES.USER_OFFERING],
     },
     {
       href: "/home/post-job",
@@ -59,46 +63,59 @@ const Navigation = () => {
           />
         </svg>
       ),
-    },
-    {
-      href: "/home/profile",
-      name: "Perfil",
-      icon: <UserIcon className="w-5 h-5 " />,
-    },
-    {
-      href: "/logout",
-      name: "Salir",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-5 h-5">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-          />
-        </svg>
-      ),
+      rolesAllowed: [ROLES.USER_CUSTOMER],
     },
   ];
 
+  const filteredNavigation = navigation.filter((item) =>
+    item.rolesAllowed.some((role) => userRoles.includes(role))
+  );
+
   return (
-    <ul className="justify-end items-center space-y-6 md:flex md:space-x-6 md:space-y-0">
-      {navigation.map((item) => {
-        return (
-          <li key={item.name} className="text-gray-700 hover:text-indigo-600">
-            <Link to={item.href} className=" flex  items-center gap-1">
-              {item.icon}
-              {item.name}
-            </Link>
-          </li>
-        );
-      })}
-    </ul>
+    <div className="flex flex-col gap-3">
+      <ul className="justify-start items-start w-full space-y-6 md:flex md:space-x-6 md:space-y-0">
+        {filteredNavigation.map((item) => {
+          return (
+            <li key={item.name} className="text-gray-700 hover:text-indigo-600">
+              <Link to={item.href} className="flex items-center gap-1">
+                {item.icon}
+                {item.name}
+              </Link>
+            </li>
+          );
+        })}
+        <Link
+          to={`/home/profile/${user.email}`}
+          className="flex text-gray-700 my-1 items-center gap-2">
+          <img
+            src={user.picture}
+            className="w-8 rounded-full"
+            alt="user-profile-img"
+          />
+          Perfil
+        </Link>
+        <li>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-1 text-gray-700 hover:text-indigo-600">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-5 h-5">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+              />
+            </svg>
+            Salir
+          </button>
+        </li>
+      </ul>
+    </div>
   );
 };
 
