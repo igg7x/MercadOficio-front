@@ -1,10 +1,10 @@
 import request from "../request";
 import HTTP from "../../utils/methods";
 
-export const getJobsByUserCustomer = async (pageParam, email) => {
+export const getJobsByUserCustomer = async (pageParam) => {
   const params = {
     method: HTTP.GET,
-    path: `jobs/customer/${email}?page=${pageParam}&size=7`,
+    path: `jobs/customer?page=${pageParam}&size=7`,
   };
   return request({ params });
 };
@@ -18,11 +18,10 @@ export const getJobsByCategories = async (pageParam, categories) => {
   return request({ params });
 };
 
-export const createJobApplication = async (jobId, email) => {
+export const getHistorialJobsByUserCustomer = async (pageParam) => {
   const params = {
-    method: HTTP.POST,
-    path: `applications/${jobId}`,
-    body: email,
+    method: HTTP.GET,
+    path: `jobs/customer/historial?page=${pageParam}&size=7`,
   };
   return request({ params });
 };

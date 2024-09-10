@@ -12,14 +12,16 @@ import ENV from "../utils/env";
  */
 const request = async ({ params }) => {
   try {
+    const authToken = localStorage.getItem("authToken");
+    console.log(authToken);
     const response = await fetch(`${ENV.BACKEND_BASE_URL}${params.path}`, {
       method: params.method,
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
       },
       body: params.body ? JSON.stringify(params.body) : null,
     });
-
     if (!response.ok) {
       throw new Error(`Request failed with status ${response.status}`);
     }
@@ -27,11 +29,10 @@ const request = async ({ params }) => {
       const data = await response.json();
       return data;
     } catch (error) {
-      return response.status;
+      throw new Error(error.message);
     }
   } catch (error) {
-    console.log(error);
-    throw new Error(error);
+    throw new Error(error.message);
   }
 };
 
