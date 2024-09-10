@@ -14,6 +14,7 @@ export function useFilteredUsersOffering(filters) {
     refetchOnWindowFocus: false,
     keepPreviousData: true,
     staleTime: 5000,
+    enabled: !!filters,
   });
 
   if (!isPreviousData && !data?.last) {
@@ -43,13 +44,3 @@ export function useFilteredUsersOffering(filters) {
     prevPage,
   };
 }
-
-export const useGetUserOffering = (email) => {
-  const { data, isError, isLoading } = useQuery({
-    queryKey: ["userOffering", email],
-    queryFn: ({ queryKey }) => getUserOfferingByEmail(queryKey[1]),
-    refetchOnWindowFocus: false,
-  });
-
-  return { data, isError, isLoading };
-};
