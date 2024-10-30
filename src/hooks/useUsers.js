@@ -9,7 +9,7 @@ import {
   updateUser,
   updateUserOffering,
 } from "../services/users/users.services";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Bounce, toast } from "react-toastify";
 import { useAuth0 } from "@auth0/auth0-react";
 export const useUserByEmail = (email) => {

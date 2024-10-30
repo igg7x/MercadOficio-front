@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  getUsersOfferingsByFilters,
-  getUserOfferingByEmail,
-} from "@services/users/users.services";
+import { getUsersOfferingsByFilters } from "@services/users/users.services";
 
 export function useFilteredUsersOffering(filters) {
   const [page, setPage] = useState(0);

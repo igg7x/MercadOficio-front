@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   getApplicationsByJobId,
   createJobApplication,
@@ -15,10 +15,11 @@ export const useApplications = (jobId) => {
 };
 
 export const useCreateJobApplication = () => {
-  const { mutate, isLoading } = useMutation({
+  // const queryClient = useQueryClient();
+  const createApplicationMutation = useMutation({
     mutationFn: createJobApplication,
     onSuccess: () => {
-      toast.success("Aplicación enviada exitosamente!", {
+      toast.success("Aplicación enviada con éxito", {
         position: "bottom-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -30,20 +31,29 @@ export const useCreateJobApplication = () => {
         transition: Bounce,
       });
     },
-    onError: (error) => {
-      toast.error("Error al enviar la aplicación", {
-        position: "bottom-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Bounce,
-      });
-      throw new Error(error);
-    },
+    // onError: (error) => {
+    //   toast.error("Error al enviar la aplicación", {
+    //     position: "bottom-center",
+    //     autoClose: 5000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "dark",
+    //     transition: Bounce,
+    //   });
+    //   throw new Error(error);
+    // },
   });
-  return { createApplication: mutate, isLoading };
+
+  function createApplication(jobId, refreshJobs) {
+    createApplicationMutation.mutate(jobId, {
+      onSettled: () => {
+        refreshJobs();
+      },
+    });
+  }
+
+  return { createApplication, isLoading: createApplicationMutation.isLoading };
 };
