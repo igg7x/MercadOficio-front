@@ -16,6 +16,24 @@ export const EyeIconSlashed = memo(() => {
   );
 });
 
+// export const StarIcon = memo(() => {
+//   return (
+//     <svg
+//       xmlns="http://www.w3.org/2000/svg"
+//       width="20"
+//       height="20"
+//       viewBox="0 0 24 24"
+//       fill="none"
+//       stroke="currentColor"
+//       stroke-width="1.5"
+//       stroke-linecap="round"
+//       stroke-linejoin="round"
+//       class="lucide lucide-star">
+//       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+//     </svg>
+//   );
+// });
+
 export const PhoneIcon = memo(() => {
   return (
     <svg
@@ -178,24 +196,11 @@ export function MailIcon(props) {
     </svg>
   );
 }
-// export const LocationIcon = memo(() => {
-//   return (
-//     <svg
-//       xmlns="http://www.w3.org/2000/svg"
-//       height="14"
-//       width="10.5"
-//       viewBox="0 0 384 512">
-//       <path
-//         fill="#63E6BE"
-//         d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"
-//       />
-//     </svg>
-//   );
-// });
 
-export const MarkIcon = memo(() => {
+export const MarkIcon = memo((props) => {
   return (
     <svg
+      {...props}
       xmlns="http://www.w3.org/2000/svg"
       height="14"
       width="10.5"
@@ -238,9 +243,30 @@ export const SearchIcon = () => {
     </svg>
   );
 };
-export const StarIcon = memo(() => {
+
+export const BookCheckIcon = memo(() => {
   return (
     <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.25"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-book-check">
+      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20" />
+      <path d="m9 9.5 2 2 4-4" />
+    </svg>
+  );
+});
+
+export const StarIcon = memo((props) => {
+  return (
+    <svg
+      {...props}
       className="w-5 h-5 text-gray-400 dark:text-gray-600"
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -493,6 +519,67 @@ export function StatusIcon(props) {
       strokeLinecap="round"
       strokeLinejoin="round">
       <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+    </svg>
+  );
+}
+
+export function WarningIcon(props) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="28"
+      height="28"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#a19e45"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-triangle-alert">
+      <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" />
+      <path d="M12 9v4" />
+      <path d="M12 17h.01" />
+    </svg>
+  );
+}
+
+export function ErroIcon(props) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="28"
+      height="28"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#db0a3f"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-circle-x">
+      <circle cx="12" cy="12" r="10" />
+      <path d="m15 9-6 6" />
+      <path d="m9 9 6 6" />
+    </svg>
+  );
+}
+
+export function SquareArrowIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#20d92d"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-square-arrow-out-up-right">
+      <path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6" />
+      <path d="m21 3-9 9" />
+      <path d="M15 3h6v6" />
     </svg>
   );
 }
