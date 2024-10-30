@@ -180,5 +180,5 @@ export function Textarea({ children, ...props }) {
 }
 
 export function CardFooter({ children }) {
-  return <footer className="flex items-center gap-4">{children}</footer>;
+  return <footer className="flex items-center  mt-1 gap-4">{children}</footer>;
 }

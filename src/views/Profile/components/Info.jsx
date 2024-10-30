@@ -6,11 +6,13 @@ import { useModal } from "../../../hooks/useModal";
 import UpdateProfileModal from "./UpdateProfileModal";
 import { CardFooter } from "../../Jobs/components/CreateNewJob";
 import { useUpdateUser, useUserByEmail } from "@hooks/useUsers";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { useAuth0 } from "@auth0/auth0-react";
 import Loading from "../../../components/Loading";
 import { useParams } from "react-router-dom";
 import Error from "@components/Errors/Error";
+import { useReportUser } from "@hooks/useReportUser";
+import { isUserReported } from "@services/reports/reports.services";
 import {
   LocationIcon,
   FileTextIcon,
@@ -19,7 +21,9 @@ import {
   MailCheckIcon,
   PhoneIcon,
   TagIcon,
+  BookCheckIcon,
 } from "@assets/icons/Icons";
+import { useQuery } from "@tanstack/react-query";
 
 const Info = () => {
   let { userEmail } = useParams();
@@ -28,10 +32,23 @@ const Info = () => {
   const locationRef = useRef(null);
   const phoneRef = useRef(null);
   const { show, toogle } = useModal();
+  const { show: showReport, toogle: toggleReport } = useModal();
   const { categories, isLoading: isLoadingCategories } = useCategories();
   const { user } = useAuth0();
 
   const { data: userData, isError, isLoading } = useUserByEmail(userEmail);
+  // const {
+  //   data: isReported,
+  //   isLoading: isLoadingUserReportered,
+  //   isError: isErrorUserReportered,
+  // } = isUserReported(userEmail);
+
+  const { data: isReported } = useQuery({
+    queryKey: ["isUserReported", userEmail],
+    queryFn: ({ queryKey }) => isUserReported(queryKey[1]),
+    refetchOnWindowFocus: false,
+    enabled: !!userEmail,
+  });
   const [selectedCategories, setSelectedCategories] = useState(
     userData?.categories || []
   );
@@ -39,6 +56,12 @@ const Info = () => {
   const { handleUpdate, isLoading: isLoadingMutation } = useUpdateUser(
     userData?.roles
   );
+
+  const {
+    handleReport,
+    isLoading: isLoadingCreateReport,
+    isSucess: isSuccessCreateReport,
+  } = useReportUser();
 
   const handleInputChange = (ref) => {
     const fieldName = ref.current.name;
@@ -102,9 +125,35 @@ const Info = () => {
     });
   };
 
+  const handleReportUser = (e) => {
+    e.preventDefault();
+    handleReport({
+      userEmailReportered: userEmail,
+    });
+    toggleReport();
+    if (isSuccessCreateReport) {
+      toast.success("Reporte creado con exito", {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
+    }
+    refreshReport();
+  };
+  const refreshReport = () => {
+    queryClient.invalidateQueries(["isUserReported", userEmail]);
+  };
+
   if (isLoading || !userData) {
     return <Loading />;
   }
+
   return (
     <section className="w-full max-w-4xl mx-auto flex flex-col max-[640px]:items-center  justify-center items-stretch  py-5 md:py-7">
       {isError ? (
@@ -374,6 +423,38 @@ const Info = () => {
               </div>
             </div>
           </UpdateProfileModal>
+          <UpdateProfileModal show={showReport}>
+            <div className="w-full relative min-h-fit overflow-y-auto text-white bg-black p-4 rounded-md m-1 max-h-[575px] max-w-2xl">
+              <div
+                className="absolute top-2 bg-white p-1 rounded-full right-2"
+                onClick={toggleReport}>
+                <MarkIcon />
+              </div>
+              <header className="w-full   p-2  border-spacing-y-2">
+                <h1 className="underline underline-offset-1">
+                  <InfoIcon className="inline-block  h-6 w-6 mr-2" />
+                  Reportar Perfil
+                </h1>
+                <p className="text-gray-500 underline underline-offset-1 text-sm ml-8">
+                  Reporta este perfil si consideras que incumple con nuestras
+                  politicas
+                </p>
+                <CardFooter>
+                  <button
+                    disabled={isLoadingCreateReport}
+                    onClick={handleReportUser}
+                    className={`mx-auto p-2 text-white hover:text-black bg-red-500 rounded-md `}>
+                    Si , Reportar
+                  </button>
+                  <button
+                    onClick={toggleReport}
+                    className="mx-auto duration-150 p-2  hover:bg-gray-400 rounded-md bg-gray-600 text-white ">
+                    Cancelar
+                  </button>
+                </CardFooter>
+              </header>
+            </div>
+          </UpdateProfileModal>
           <ToastContainer
             position="bottom-center"
             autoClose={5000}
@@ -386,8 +467,25 @@ const Info = () => {
             pauseOnHover
             theme="light"
           />
-
-          {userEmail === user.email && (
+          {userEmail !== user.email ? (
+            !isReported ? (
+              <div className="mt-8 flex justify-start">
+                <button
+                  onClick={toggleReport}
+                  className="inline-flex items-center rounded-md border border-transparent bg-black px-4 py-2 text-sm font-medium text-white shadow-sm hover:text-black hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  type="submit">
+                  Reportar Perfil
+                </button>
+              </div>
+            ) : (
+              <div className="py-5 mt-2 text-center px-4 w-full text-ellipsis">
+                <p className="text-sm flex gap-2 items-center justify-center text-green-600">
+                  <BookCheckIcon />
+                  Este perfil ha sido reportado exitosamente
+                </p>
+              </div>
+            )
+          ) : (
             <div className="mt-8 flex justify-end">
               <button
                 onClick={toogle}

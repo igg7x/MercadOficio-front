@@ -18,6 +18,7 @@ const Reviews = () => {
     page,
   } = useReviews(userEmail);
 
+  console.log(reviews);
   return (
     <>
       <div className="p-4">
@@ -29,7 +30,6 @@ const Reviews = () => {
           Aqui podras ver las reseñas que han dejado otros usuarios sobre ti
         </p>
       </div>
-      {/* <NewReview /> */}
       <div className="flex-col px-4 py-1 mx-4 items-center justify-center   max-[640px]:mb-14">
         {isLoading ? (
           <Loading />

@@ -18,10 +18,13 @@ import {
   CalendarIcon,
 } from "@assets/icons/Icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useJobsByID } from "@hooks/useJobs";
+import { useJobsByID, useDeleteJob } from "@hooks/useJobs";
 import { updateJob } from "@services/jobs/jobs.services";
 const JobDetails = () => {
   const JOB_ID = useParams().jobId;
+  const [selectedApplicant, setSelectedApplicant] = useState("");
+  const { show, toogle } = useModal();
+  const { show: showDeleteModal, toogle: toogleDelete } = useModal();
 
   const { data: job, isError, isLoading: isLoadingData } = useJobsByID(JOB_ID);
   const {
@@ -29,15 +32,18 @@ const JobDetails = () => {
     isLoading: isLoadingApplications,
     isError: isErrorApplications,
   } = useApplications(JOB_ID);
-  const [selectedApplicant, setSelectedApplicant] = useState("");
-  const { show, toogle } = useModal();
 
+  const { handleDeleteJob, isLoadingDeleteMutation } = useDeleteJob(JOB_ID);
   const queryClient = useQueryClient();
+
   const { mutate, isLoading: isLoadingMutation } = useMutation({
     mutationFn: updateJob,
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: ["jobsByID"],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["getNotifications", selectedApplicant],
       });
       toogle();
     },
@@ -53,6 +59,12 @@ const JobDetails = () => {
     e.preventDefault();
     if (isLoadingApplications) return;
     mutate({ userOfferingEmail: selectedApplicant, JOB_ID });
+  };
+
+  const handleDeleteJobById = () => {
+    if (isLoadingDeleteMutation) return;
+    handleDeleteJob(JOB_ID);
+    toogleDelete();
   };
 
   if (isLoadingData) {
@@ -227,6 +239,44 @@ const JobDetails = () => {
               />
             </div>
           )}
+        </div>
+        <JobApplicationModal show={showDeleteModal}>
+          <div className="w-full relative bg-black text-white p-2 rounded-md m-1  max-h-[575px] max-w-2xl">
+            <div
+              className="absolute top-2 right-2 bg-white p-1 rounded-full "
+              onClick={toogleDelete}>
+              <MarkIcon />
+            </div>
+            <header className="mt-3">
+              <h1>
+                <InfoIcon className="inline-block h-6 w-6 mr-2" />
+                ¿Estas seguro de eliminar este trabajo? :
+              </h1>
+              <p className="text-gray-500 text-sm ml-8 px-2">
+                Esta acción no se puede deshacer ¿Estás seguro de que quieres
+                eliminar este puesto de trabajo?
+              </p>
+            </header>
+            <CardFooter>
+              <button
+                onClick={handleDeleteJobById}
+                className={`mx-auto p-2 text-white hover:text-black bg-red-500 rounded-md `}>
+                Eliminar
+              </button>
+              <button
+                onClick={toogleDelete}
+                className="mx-auto duration-150 p-2  hover:bg-gray-400 rounded-md bg-gray-600 text-white ">
+                Cancelar
+              </button>
+            </CardFooter>
+          </div>
+        </JobApplicationModal>
+        <div>
+          <button
+            onClick={toogleDelete}
+            className="bg-black hover:bg-red-500 hover:text-black text-white p-2  rounded-md">
+            Eliminar Trabajo
+          </button>
         </div>
       </div>
     </section>

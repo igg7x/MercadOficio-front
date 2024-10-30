@@ -34,7 +34,7 @@ const UserOfferingCard = ({ user }) => {
           </div>
           <div className="mt-5 space-y-4 text-sm sm:mt-0 sm:space-y-2"></div>
         </div>
-        <div className="items-center px-3 py-1 gap-3 max-[640px]:items-start  text-sm flex  sm:space-x-4 sm:space-y-0">
+        <div className="items-center flex-wrap px-3 py-1 gap-3 max-[640px]:items-start  text-sm flex  sm:space-x-4 sm:space-y-0">
           <span className="flex gap-1 items-center text-gray-500">
             <MapPinIcon className="w-6 h-6 text-gray-400" />
             {user.location}

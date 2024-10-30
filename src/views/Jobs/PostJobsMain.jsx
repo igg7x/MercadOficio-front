@@ -1,28 +1,10 @@
 import React, { useState } from "react";
-import Error from "../../components/Errors/Error";
 import HeaderMobile from "@components/HeaderMobile";
-import Pagination from "@components/Pagination";
-import CreateNewJob from "./components/CreateNewJob";
-import JobUserCustomerCard from "./components/JobUserCustomerCard";
-import Loading from "../../components/Loading";
-import { useJobs } from "@hooks/useJobs";
-import { getJobsByUserCustomer } from "@services/jobs/jobs.services";
-import { useAuth0 } from "@auth0/auth0-react";
 import JobsActiveUserCustomer from "./components/JobsActiveUserCustomer";
 import JobsHistorialUserCustomer from "./components/JobsHistorialUserCustomer";
 const PostJobsMain = () => {
-  const { user } = useAuth0();
   const TABS = ["Trabajos activos", "Historial de trabajos"];
   const [selectedTab, setSelectedTab] = useState(TABS[0]);
-  // const {
-  //   data,
-  //   isError,
-  //   isLoading: isLoadingData,
-  //   isPreviousData,
-  //   nextPage,
-  //   prevPage,
-  //   page,
-  // } = useJobs(getJobsByUserCustomer, "jobsByUserCustomer", user?.email);
 
   return (
     <section className="[grid-area:main] flex-col flex items-center overflow-y-auto bg-gray-50">
