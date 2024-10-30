@@ -9,11 +9,10 @@ export const getJobsByUserCustomer = async (pageParam) => {
   return request({ params });
 };
 
-export const getJobsByCategories = async (pageParam, categories) => {
+export const getJobsByCategories = async (pageParam) => {
   const params = {
-    method: HTTP.POST,
+    method: HTTP.GET,
     path: `jobs/all?page=${pageParam}&size=7`,
-    body: categories,
   };
   return request({ params });
 };
@@ -22,6 +21,14 @@ export const getHistorialJobsByUserCustomer = async (pageParam) => {
   const params = {
     method: HTTP.GET,
     path: `jobs/customer/historial?page=${pageParam}&size=7`,
+  };
+  return request({ params });
+};
+
+export const getHistorialForUserOffering = async (pageParam) => {
+  const params = {
+    method: HTTP.GET,
+    path: `jobs/offerings/historial?page=${pageParam}&size=8`,
   };
   return request({ params });
 };
@@ -51,6 +58,14 @@ export const getJobById = async (jobId) => {
   const params = {
     method: HTTP.GET,
     path: `jobs/get/${jobId}`,
+  };
+  return request({ params });
+};
+
+export const deleteJob = async (jobId) => {
+  const params = {
+    method: HTTP.PUT,
+    path: `jobs/delete/${jobId}`,
   };
   return request({ params });
 };

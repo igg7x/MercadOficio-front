@@ -8,10 +8,11 @@ export const getApplicationsByJobId = async (jobId) => {
   return request({ params });
 };
 
-export const createJobApplication = async (param) => {
+export const createJobApplication = async (jobId) => {
+  console.log(jobId);
   const params = {
     method: HTTP.POST,
-    path: `applications/${param.jobId}`,
+    path: `applications/${jobId}`,
   };
   return request({ params });
 };
